@@ -222,6 +222,42 @@
       display: none;
     }
 
+    .print-report {
+      display: none;
+    }
+
+    .report-section {
+      margin-bottom: 20px;
+      border: 1px solid #cfd8e3;
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    .report-section h2 {
+      border-bottom: 2px solid #1f3b5b;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .report-item {
+      padding: 8px;
+      background: #f8fbff;
+      border-radius: 8px;
+      border: 1px solid #dde6f3;
+    }
+
+    .report-label {
+      font-weight: bold;
+      color: #1f3b5b;
+      margin-bottom: 5px;
+    }
+
     @media print {
       body {
         background: white;
@@ -230,52 +266,42 @@
         font-size: 12px;
       }
 
-      .student-tabs,
-      .btn-group,
-      .progress,
-      .progress-fill,
-      .small,
-      .main-btn {
+      .container > *:not(.print-report) {
         display: none !important;
       }
 
-      .container {
-        max-width: 100%;
-      }
-
-      .card {
-        box-shadow: none;
-        border: 1px solid #ccc;
-        margin-bottom: 12px;
-        page-break-inside: avoid;
+      .print-report {
+        display: block;
+        padding: 20px;
       }
 
       .print-header {
         display: block;
         text-align: center;
+        margin-bottom: 25px;
+        border-bottom: 3px solid #1f3b5b;
+        padding-bottom: 15px;
+      }
+
+      .report-section {
+        page-break-inside: avoid;
         margin-bottom: 20px;
-        border-bottom: 2px solid #1f3b5b;
-        padding-bottom: 10px;
+      }
+
+      .report-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .report-item {
+        border: 1px solid #bbb;
+        background: white;
+        padding: 10px;
       }
 
       h1, h2, h3 {
         color: black;
-      }
-
-      table {
-        font-size: 11px;
-      }
-
-      textarea,
-      input,
-      select {
-        border: 1px solid #999;
-        background: white;
-      }
-
-      .summary {
-        border: 1px solid #999;
-        background: #fff;
       }
     }
     }
@@ -285,9 +311,38 @@
 
 <div class="container">
 
-  <div class="print-header">
-    <h1>Middle School Literacy Intervention Report</h1>
-    <p>Student Literacy Monitoring, MAP Data, MAZE Comprehension, and CEFR Tracking</p>
+  <div class="print-report" id="printReport">
+
+    <div class="print-header">
+      <h1>Middle School Literacy Intervention Report</h1>
+      <p>Student Literacy Monitoring, MAP Data, MAZE Comprehension, and CEFR Tracking</p>
+    </div>
+
+    <div class="report-section">
+      <h2>Student Information</h2>
+      <div class="report-grid" id="reportStudentInfo"></div>
+    </div>
+
+    <div class="report-section">
+      <h2>Reading & Comprehension</h2>
+      <div class="report-grid" id="reportReading"></div>
+    </div>
+
+    <div class="report-section">
+      <h2>Writing Assessment</h2>
+      <div class="report-grid" id="reportWriting"></div>
+    </div>
+
+    <div class="report-section">
+      <h2>Language Processing</h2>
+      <div class="report-grid" id="reportLanguage"></div>
+    </div>
+
+    <div class="report-section">
+      <h2>Intervention Summary</h2>
+      <div id="reportSummary"></div>
+    </div>
+
   </div>
   <h1>Middle School Literacy Intervention & Academic Skills Tracker</h1>
   <p style="margin-bottom:20px;">Comprehensive literacy intervention, comprehension tracking, and academic support platform for middle school transition planning and ongoing intervention support.</p>
@@ -752,7 +807,7 @@
       <button class="main-btn" onclick="generateSummary()">Generate Summary</button>
       <button class="main-btn" onclick="saveData()">Save Student Data</button>
       <button class="main-btn" onclick="loadData()">Load Student Data</button>
-      <button class="main-btn" onclick="window.print()">Print Report</button>
+      <button class="main-btn" onclick="generatePrintReport()">Print Report</button>
       <button class="main-btn" onclick="resetForm()">Reset Form</button>
     </div>
   </div>
@@ -910,6 +965,55 @@
     document.getElementById('summaryOutput').innerHTML = 'Complete the assessment to generate an intervention summary.';
 
     updateProgress();
+  }
+
+  function createReportItem(label, value) {
+    return `
+      <div class="report-item">
+        <div class="report-label">${label}</div>
+        <div>${value || 'N/A'}</div>
+      </div>
+    `;
+  }
+
+  function generatePrintReport() {
+    generateSummary();
+
+    document.getElementById('reportStudentInfo').innerHTML = `
+      ${createReportItem('Student Name', currentStudent)}
+      ${createReportItem('Grade Transition', document.getElementById('gradeLevel').value)}
+      ${createReportItem('Assessment Date', document.getElementById('assessmentDate').value)}
+      ${createReportItem('MAP Reading', document.getElementById('mapReading').value)}
+      ${createReportItem('MAP Language Usage', document.getElementById('mapLanguage').value)}
+      ${createReportItem('CEFR Level', document.getElementById('cefrLevel').value)}
+    `;
+
+    document.getElementById('reportReading').innerHTML = `
+      ${createReportItem('Instructional Reading Level', document.getElementById('readingLevel').value)}
+      ${createReportItem('Reading Fluency', document.getElementById('fluency').value + ' WPM')}
+      ${createReportItem('MAZE Score', document.getElementById('mazeScore').value)}
+      ${createReportItem('Vocabulary Support', document.getElementById('vocabSupport').value)}
+      ${createReportItem('Reading Notes', document.getElementById('readingNotes').value)}
+    `;
+
+    document.getElementById('reportWriting').innerHTML = `
+      ${createReportItem('Sentence Construction', document.getElementById('sentenceLevel').value)}
+      ${createReportItem('Paragraph Organization', document.getElementById('paragraphLevel').value)}
+      ${createReportItem('Independence Level', document.getElementById('independence').value)}
+      ${createReportItem('Writing Scaffold Support', document.getElementById('writingScaffold').value)}
+      ${createReportItem('Writing Notes', document.getElementById('writingNotes').value)}
+    `;
+
+    document.getElementById('reportLanguage').innerHTML = `
+      ${createReportItem('Following Directions', document.getElementById('directions').value)}
+      ${createReportItem('Chunked Instruction Response', document.getElementById('chunkedInstruction').value)}
+      ${createReportItem('Non-Chunked Response', document.getElementById('nonChunkedInstruction').value)}
+      ${createReportItem('Processing Notes', document.getElementById('processingNotes').value)}
+    `;
+
+    document.getElementById('reportSummary').innerHTML = document.getElementById('summaryOutput').innerHTML;
+
+    window.print();
   }
 
   updateProgress();
