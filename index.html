@@ -316,36 +316,45 @@
     <div class="print-header">
       <h1>Middle School Literacy Intervention Report</h1>
       <p>Student Literacy Monitoring, MAP Data, MAZE Comprehension, and CEFR Tracking</p>
+      <p style="font-size:11px; margin-top:6px;">Literacy Intervention System (LIS) v2.4.1</p>
     </div>
 
-    <div class="report-section">
-      <h2>Student Information</h2>
+    <div class="report-section" style="border:2px solid #1f3b5b; background:#f8fbff;">
+      <h2>Student Overview</h2>
       <div class="report-grid" id="reportStudentInfo"></div>
+      <div style="margin-top:15px; font-size:13px; color:#555;">
+        This report summarizes the student's current literacy intervention performance, academic language development, and instructional support needs.
+      </div>
     </div>
 
     <div class="report-section">
-      <h2>Reading & Comprehension</h2>
+      <h2>Core Literacy Data</h2>
       <div class="report-grid" id="reportReading"></div>
     </div>
 
     <div class="report-section">
-      <h2>Writing Assessment</h2>
+      <h2>Writing & Academic Language</h2>
       <div class="report-grid" id="reportWriting"></div>
     </div>
 
     <div class="report-section">
-      <h2>Language Processing</h2>
+      <h2>Language Processing & Instructional Response</h2>
       <div class="report-grid" id="reportLanguage"></div>
     </div>
 
-    <div class="report-section">
-      <h2>Intervention Summary</h2>
+    <div class="report-section" style="border:2px solid #1c7c54; background:#f6fff8;">
+      <h2>Intervention Recommendation Summary</h2>
       <div id="reportSummary"></div>
     </div>
 
   </div>
   <h1>Middle School Literacy Intervention & Academic Skills Tracker</h1>
-  <p style="margin-bottom:20px;">Comprehensive literacy intervention, comprehension tracking, and academic support platform for middle school transition planning and ongoing intervention support.</p>
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+    <p>Comprehensive literacy intervention, comprehension tracking, and academic support platform for middle school transition planning and ongoing intervention support.</p>
+    <div style="background:#1f3b5b; color:white; padding:8px 14px; border-radius:20px; font-size:13px; font-weight:bold; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+      LIS v2.4.1 | Academic Year 2025-2026
+    </div>
+  </div>
 
   <div class="card">
     <h2>Grade 8 → Grade 9</h2>
@@ -986,13 +995,15 @@
       ${createReportItem('MAP Reading', document.getElementById('mapReading').value)}
       ${createReportItem('MAP Language Usage', document.getElementById('mapLanguage').value)}
       ${createReportItem('CEFR Level', document.getElementById('cefrLevel').value)}
+      ${createReportItem('Instructional Reading Level', document.getElementById('readingLevel').value)}
+      ${createReportItem('Reading Fluency', document.getElementById('fluency').value + ' WPM')}
+      ${createReportItem('MAZE Comprehension', document.getElementById('mazeScore').value)}
     `;
 
     document.getElementById('reportReading').innerHTML = `
-      ${createReportItem('Instructional Reading Level', document.getElementById('readingLevel').value)}
-      ${createReportItem('Reading Fluency', document.getElementById('fluency').value + ' WPM')}
-      ${createReportItem('MAZE Score', document.getElementById('mazeScore').value)}
       ${createReportItem('Vocabulary Support', document.getElementById('vocabSupport').value)}
+      ${createReportItem('Main Idea Skills', document.querySelector('[data-group="mainIdea"]').getAttribute('data-value') || 'N/A')}
+      ${createReportItem('Inference Skills', document.querySelector('[data-group="inference"]').getAttribute('data-value') || 'N/A')}
       ${createReportItem('Reading Notes', document.getElementById('readingNotes').value)}
     `;
 
@@ -1013,7 +1024,9 @@
 
     document.getElementById('reportSummary').innerHTML = document.getElementById('summaryOutput').innerHTML;
 
-    window.print();
+    setTimeout(() => {
+      window.print();
+    }, 300);
   }
 
   updateProgress();
