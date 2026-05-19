@@ -193,22 +193,152 @@
         grid-template-columns: 1fr;
       }
     }
+
+    .materials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .material-card {
+      border: 1px solid #d8e2f1;
+      border-radius: 10px;
+      padding: 15px;
+      background: #f8fbff;
+    }
+
+    .material-card h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .material-card ul {
+      padding-left: 18px;
+      line-height: 1.7;
+    }
+
+    .print-header {
+      display: none;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+        color: black;
+        font-size: 12px;
+      }
+
+      .student-tabs,
+      .btn-group,
+      .progress,
+      .progress-fill,
+      .small,
+      .main-btn {
+        display: none !important;
+      }
+
+      .container {
+        max-width: 100%;
+      }
+
+      .card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        margin-bottom: 12px;
+        page-break-inside: avoid;
+      }
+
+      .print-header {
+        display: block;
+        text-align: center;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #1f3b5b;
+        padding-bottom: 10px;
+      }
+
+      h1, h2, h3 {
+        color: black;
+      }
+
+      table {
+        font-size: 11px;
+      }
+
+      textarea,
+      input,
+      select {
+        border: 1px solid #999;
+        background: white;
+      }
+
+      .summary {
+        border: 1px solid #999;
+        background: #fff;
+      }
+    }
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>Tier 2 Literacy Intervention Assessment Tool</h1>
-  <p style="margin-bottom:20px;">Designed to gather qualitative and quantitative academic data for literacy intervention planning.</p>
 
-  <div class="student-tabs">
-    <button class="student-btn active" onclick="switchStudent('Leen', this)">Leen</button>
-    <button class="student-btn" onclick="switchStudent('Tawfik', this)">Tawfik</button>
-    <button class="student-btn" onclick="switchStudent('Mohamed A', this)">Mohamed A</button>
+  <div class="print-header">
+    <h1>Middle School Literacy Intervention Report</h1>
+    <p>Student Literacy Monitoring, MAP Data, MAZE Comprehension, and CEFR Tracking</p>
+  </div>
+  <h1>Middle School Literacy Intervention & Academic Skills Tracker</h1>
+  <p style="margin-bottom:20px;">Comprehensive literacy intervention, comprehension tracking, and academic support platform for middle school transition planning and ongoing intervention support.</p>
+
+  <div class="card">
+    <h2>Grade 8 → Grade 9</h2>
+    <div class="student-tabs">
+      <button class="student-btn active" onclick="switchStudent('Leen', this)">Leen</button>
+      <button class="student-btn" onclick="switchStudent('Tawfeeq', this)">Tawfeeq</button>
+      <button class="student-btn" onclick="switchStudent('Mohamed', this)">Mohamed</button>
+    </div>
+
+    <h2 style="margin-top:20px;">Grade 7 → Grade 8</h2>
+    <div class="student-tabs">
+      <button class="student-btn" onclick="switchStudent('Gehan', this)">Gehan</button>
+      <button class="student-btn" onclick="switchStudent('Alyazan', this)">Alyazan</button>
+      <button class="student-btn" onclick="switchStudent('Ibrahim', this)">Ibrahim</button>
+    </div>
+
+    <h2 style="margin-top:20px;">Grade 6 → Grade 7</h2>
+    <div class="student-tabs">
+      <button class="student-btn" onclick="switchStudent('Ali', this)">Ali</button>
+      <button class="student-btn" onclick="switchStudent('Laith', this)">Laith</button>
+    </div>
   </div>
 
   <div class="card">
-    <h2>Student Information</h2>
+    <h2>Student Information & Transition Tracking</h2>
+
+    <div class="grid">
+      <div>
+        <label>Previous MAP Reading Score</label>
+        <input type="number" id="mapReading" placeholder="Enter MAP Reading score">
+      </div>
+
+      <div>
+        <label>Previous MAP Language Usage Score</label>
+        <input type="number" id="mapLanguage" placeholder="Enter MAP Language score">
+      </div>
+
+      <div>
+        <label>Current CEFR / Cambridge Level</label>
+        <select id="cefrLevel">
+          <option>A1</option>
+          <option>A2</option>
+          <option>B1</option>
+          <option>B2</option>
+          <option>C1</option>
+        </select>
+      </div>
+    </div>
     <div class="grid">
       <div>
         <label>Student Name</label>
@@ -217,11 +347,15 @@
 
       <div>
         <label>Grade Level</label>
-        <input type="text" id="gradeLevel" value="Grade 8 Transitioning to Grade 9">
+        <select id="gradeLevel">
+          <option>Grade 8 → Grade 9</option>
+          <option>Grade 7 → Grade 8</option>
+          <option>Grade 6 → Grade 7</option>
+        </select>
       </div>
 
       <div>
-        <label>Assessment Date</label>
+        <label>Assessment / Progress Monitoring Date</label>
         <input type="date" id="assessmentDate">
       </div>
     </div>
@@ -230,7 +364,7 @@
   <div class="grid">
 
     <div class="card">
-      <h2>Reading Assessment</h2>
+      <h2>Reading & MAZE Comprehension Assessment</h2>
 
       <label>Instructional Reading Level</label>
       <select id="readingLevel">
@@ -242,6 +376,9 @@
       </select>
 
       <label>Reading Fluency (WPM)</label>
+
+      <label>MAZE Comprehension Score</label>
+      <input type="number" id="mazeScore" placeholder="Enter MAZE score">
       <input type="number" id="fluency">
 
       <label>Main Idea Identification</label>
@@ -301,6 +438,14 @@
         <option>Moderately Dependent</option>
         <option>Occasionally Needs Support</option>
         <option>Mostly Independent</option>
+      </select>
+
+      <label>Scaffold Dependence During Writing</label>
+      <select id="writingScaffold">
+        <option>Requires Full Scaffold</option>
+        <option>Benefits from Guided Support</option>
+        <option>Minimal Scaffolds Needed</option>
+        <option>Independent Writer</option>
       </select>
 
       <label>Writing Sample Notes</label>
@@ -369,6 +514,215 @@
   </div>
 
   <div class="card">
+    <h2>Instructional Materials & Intervention Resources</h2>
+
+    <div class="materials-grid">
+      <div class="material-card">
+        <h3>Ventures Second Edition</h3>
+        <ul>
+          <li>Core literacy curriculum</li>
+          <li>Grammar and vocabulary development</li>
+          <li>Systematic language progression</li>
+          <li>CEFR-aligned instruction</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>MAZE Comprehension</h3>
+        <ul>
+          <li>Reading comprehension monitoring</li>
+          <li>Inference and accuracy tracking</li>
+          <li>Progress benchmarking</li>
+          <li>Intervention response analysis</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>Cambridge / CEFR Assessment</h3>
+        <ul>
+          <li>A1-C1 proficiency tracking</li>
+          <li>Language acquisition monitoring</li>
+          <li>Academic readiness evaluation</li>
+          <li>Progress comparison over time</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>MAP Growth Data</h3>
+        <ul>
+          <li>Reading benchmark data</li>
+          <li>Language usage growth trends</li>
+          <li>Longitudinal academic tracking</li>
+          <li>Instructional planning support</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 style="margin-top:25px;">Program Resources & Assessment Framework</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Resource / Assessment</th>
+          <th>Purpose</th>
+          <th>Current Usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ventures Second Edition - Level 3</td>
+          <td>Core literacy instruction and language systems development</td>
+          <td>Primary intervention curriculum</td>
+        </tr>
+        <tr>
+          <td>MAZE Comprehension</td>
+          <td>Reading comprehension progress monitoring</td>
+          <td>Used for comprehension tracking and data collection</td>
+        </tr>
+        
+        <tr>
+          <td>Cambridge English Assessment / CEFR Tracking</td>
+          <td>Track language acquisition and proficiency progression</td>
+          <td>Used for CEFR-aligned intervention monitoring</td>
+        </tr>
+        <tr>
+          <td>MAP Assessment Data</td>
+          <td>Benchmark growth and achievement trends</td>
+          <td>Supporting assessment data point</td>
+        </tr>
+        <tr>
+          <td>CEFR-Based Proficiency Tracking</td>
+          <td>Language proficiency progression</td>
+          <td>Long-term literacy monitoring</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Assessment Materials & Skill-Based Testing Resources</h2>
+
+    <div class="materials-grid">
+
+      <div class="material-card">
+        <h3>Reading Fluency Assessment</h3>
+        <ul>
+          <li>1-minute oral reading passages</li>
+          <li>Grade-leveled nonfiction texts</li>
+          <li>WPM tracking sheets</li>
+          <li>Error and decoding analysis</li>
+          <li>Repeated reading comparison</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>Comprehension Testing</h3>
+        <ul>
+          <li>MAZE comprehension passages</li>
+          <li>Main idea questions</li>
+          <li>Inference-based questions</li>
+          <li>Vocabulary in context tasks</li>
+          <li>Short-response comprehension prompts</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>Writing Assessment Tasks</h3>
+        <ul>
+          <li>Sentence expansion activities</li>
+          <li>Paragraph organization prompts</li>
+          <li>Short constructed responses</li>
+          <li>Opinion and narrative prompts</li>
+          <li>Independent vs scaffolded writing samples</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>Vocabulary & Language Skills</h3>
+        <ul>
+          <li>Academic vocabulary matching</li>
+          <li>Context clue exercises</li>
+          <li>Grammar correction tasks</li>
+          <li>Sentence completion activities</li>
+          <li>Tier 2 vocabulary checks</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>Language Processing Evaluation</h3>
+        <ul>
+          <li>Multi-step direction tasks</li>
+          <li>Chunked instruction comparison</li>
+          <li>Listening comprehension checks</li>
+          <li>Instruction recall tasks</li>
+          <li>Sequencing activities</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>Cambridge / CEFR Progression</h3>
+        <ul>
+          <li>A1-A2 reading tasks</li>
+          <li>B1 comprehension passages</li>
+          <li>Cambridge-style writing prompts</li>
+          <li>Speaking rubric tracking</li>
+          <li>CEFR-aligned benchmark checks</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <table style="margin-top:25px;">
+      <thead>
+        <tr>
+          <th>Skill Area</th>
+          <th>Suggested Material</th>
+          <th>Assessment Method</th>
+          <th>Frequency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Reading Fluency</td>
+          <td>Grade-leveled passages</td>
+          <td>1-minute oral reading</td>
+          <td>Biweekly</td>
+        </tr>
+        <tr>
+          <td>Reading Comprehension</td>
+          <td>MAZE passages</td>
+          <td>Timed comprehension tasks</td>
+          <td>Weekly</td>
+        </tr>
+        <tr>
+          <td>Writing</td>
+          <td>Constructed response prompts</td>
+          <td>Independent + scaffolded comparison</td>
+          <td>1-2 times weekly</td>
+        </tr>
+        <tr>
+          <td>Vocabulary</td>
+          <td>Ventures vocabulary sets</td>
+          <td>Context/application activities</td>
+          <td>Weekly</td>
+        </tr>
+        <tr>
+          <td>Language Processing</td>
+          <td>Teacher-created direction tasks</td>
+          <td>Observation + completion tracking</td>
+          <td>Ongoing</td>
+        </tr>
+        <tr>
+          <td>CEFR / Cambridge</td>
+          <td>Cambridge-aligned assessments</td>
+          <td>Benchmark proficiency checks</td>
+          <td>Every 6 weeks</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
     <h2>Data Collection Recommendations</h2>
 
     <div class="tag">Use existing classroom texts</div>
@@ -388,7 +742,7 @@
   </div>
 
   <div class="card">
-    <h2>Intervention Summary</h2>
+    <h2>Intervention Planning Summary</h2>
 
     <div class="summary" id="summaryOutput">
       Complete the assessment to generate an intervention summary.
@@ -409,8 +763,13 @@
 
   const studentProfiles = {
     'Leen': {},
-    'Tawfik': {},
-    'Mohamed A': {}
+    'Tawfeeq': {},
+    'Mohamed': {},
+    'Gehan': {},
+    'Alyazan': {},
+    'Ibrahim': {},
+    'Ali': {},
+    'Laith': {}
   };
 
   document.getElementById('studentName').value = currentStudent;
@@ -463,16 +822,18 @@
   function generateSummary() {
     const readingLevel = document.getElementById('readingLevel').value;
     const fluency = document.getElementById('fluency').value;
+    const mapReading = document.getElementById('mapReading').value;
+    const cefrLevel = document.getElementById('cefrLevel').value;
     const independence = document.getElementById('independence').value;
     const directions = document.getElementById('directions').value;
 
     const summary = `
       <strong>${currentStudent}</strong> currently demonstrates a reading instructional level of <strong>${readingLevel}</strong>. 
-      Reading fluency data indicates approximately <strong>${fluency || 'N/A'} WPM</strong>. 
+      Reading fluency data indicates approximately <strong>${fluency || 'N/A'} WPM</strong>. Current MAZE comprehension data and classroom literacy performance suggest ongoing monitoring of comprehension accuracy and reading independence. Previous MAP Reading data currently reflects a score of <strong>${mapReading || 'N/A'}</strong>, while Cambridge assessment data places the student at approximately <strong>${cefrLevel}</strong> proficiency. 
       The student currently shows an independence level categorized as <strong>${independence}</strong>. 
       In language processing tasks, the student demonstrates the following profile: <strong>${directions}</strong>. 
       
-      Based on collected data, recommended next steps include continued scaffolded literacy support, targeted reading comprehension instruction, structured writing intervention, and explicit multi-step instruction modeling. 
+      Based on collected data, recommended next steps include continued scaffolded literacy support, targeted MAZE comprehension intervention, structured writing intervention, explicit vocabulary instruction, and systematic multi-step instruction modeling aligned with the current Ventures literacy framework and academic transition expectations. 
       
       The assessment emphasizes the importance of comparing independent performance against scaffolded performance to identify growth potential and instructional responsiveness.
     `;
