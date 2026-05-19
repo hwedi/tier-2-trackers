@@ -13,9 +13,11 @@
     }
 
     body {
-      background: #f4f7fb;
-      color: #222;
-      padding: 20px;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: #eef2f7;
+      color: #1f2937;
     }
 
     h1, h2, h3 {
@@ -24,16 +26,19 @@
     }
 
     .container {
-      max-width: 1400px;
-      margin: auto;
+      max-width: 1450px;
+      margin: 30px auto;
+      padding: 25px;
     }
 
     .card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      border: 1px solid #dbe4f0;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      transition: all 0.25s ease;
     }
 
     .student-tabs {
@@ -66,17 +71,21 @@
 
     label {
       display: block;
-      margin-top: 12px;
-      margin-bottom: 5px;
-      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
     }
 
     input, select, textarea {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      resize: vertical;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
     }
 
     textarea {
@@ -128,13 +137,16 @@
     }
 
     .main-btn {
-      background: #1f3b5b;
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
       color: white;
       border: none;
-      padding: 12px 18px;
-      border-radius: 8px;
+      border-radius: 12px;
+      padding: 13px 20px;
+      font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.2);
     }
 
     .main-btn:hover {
@@ -153,7 +165,10 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 15px;
+      overflow: hidden;
+      border-radius: 14px;
+      background: white;
+      border: 1px solid #e2e8f0;
     }
 
     th, td {
@@ -258,6 +273,8 @@
       margin-bottom: 5px;
     }
 
+    
+
     @media print {
       body {
         background: white;
@@ -314,16 +331,17 @@
   <div class="print-report" id="printReport">
 
     <div class="print-header">
-      <h1>Middle School Literacy Intervention Report</h1>
-      <p>Student Literacy Monitoring, MAP Data, MAZE Comprehension, and CEFR Tracking</p>
-      <p style="font-size:11px; margin-top:6px;">Literacy Intervention System (LIS) v2.4.1</p>
+      <h1>Student Literacy Support Report</h1>
+      <p id="printCycle" style="font-weight:600; margin-top:8px;"></p>
+      <p>Student Literacy & Progress Monitoring</p>
+      <p style="font-size:11px; margin-top:6px;">Literacy Intervention System (LIS) Build 24.3</p>
     </div>
 
-    <div class="report-section" style="border:2px solid #1f3b5b; background:#f8fbff;">
+    <div class="report-section" style="border:1px solid #999; background:#fafafa;">
       <h2>Student Overview</h2>
       <div class="report-grid" id="reportStudentInfo"></div>
       <div style="margin-top:15px; font-size:13px; color:#555;">
-        This report summarizes the student's current literacy intervention performance, academic language development, and instructional support needs.
+        Summary of current literacy performance and support needs.
       </div>
     </div>
 
@@ -338,21 +356,29 @@
     </div>
 
     <div class="report-section">
-      <h2>Language Processing & Instructional Response</h2>
+      <h2>Learning Support</h2>
       <div class="report-grid" id="reportLanguage"></div>
     </div>
 
-    <div class="report-section" style="border:2px solid #1c7c54; background:#f6fff8;">
-      <h2>Intervention Recommendation Summary</h2>
+    <div class="report-section" style="border:1px solid #999; background:#fafafa;">
+      <h2>Support Summary</h2>
       <div id="reportSummary"></div>
+      <div style="margin-top:40px; display:flex; justify-content:space-between; gap:40px;">
+        <div style="flex:1; border-top:1px solid #555; padding-top:6px; text-align:center;">
+          Reviewer Signature
+        </div>
+        <div style="flex:1; border-top:1px solid #555; padding-top:6px; text-align:center;">
+          Academic Support Coordinator
+        </div>
+      </div>
     </div>
 
   </div>
-  <h1>Middle School Literacy Intervention & Academic Skills Tracker</h1>
+  <h1>Literacy Intervention System</h1>
   <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
     <p>Comprehensive literacy intervention, comprehension tracking, and academic support platform for middle school transition planning and ongoing intervention support.</p>
     <div style="background:#1f3b5b; color:white; padding:8px 14px; border-radius:20px; font-size:13px; font-weight:bold; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
-      LIS v2.4.1 | Academic Year 2025-2026
+      LIS Build 24.3 | Academic Year 2025-2026
     </div>
   </div>
 
@@ -382,6 +408,28 @@
     <h2>Student Information & Transition Tracking</h2>
 
     <div class="grid">
+      <div>
+        <label>Reviewed By</label>
+        <input type="text" id="reviewedBy" placeholder="Staff Member">
+      </div>
+
+      <div>
+        <label>Reporting Cycle</label>
+        <select id="reportCycle">
+          <option>Semester 1 Report</option>
+          <option>Semester 2 - Mid Report</option>
+          <option>Semester 2 - Final Report</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Student Support Status</label>
+        <select id="supportStatus">
+          <option>Monitoring</option>
+          <option>Strategic Support</option>
+          <option>Intensive Support</option>
+        </select>
+      </div>
       <div>
         <label>Previous MAP Reading Score</label>
         <input type="number" id="mapReading" placeholder="Enter MAP Reading score">
@@ -428,7 +476,7 @@
   <div class="grid">
 
     <div class="card">
-      <h2>Reading & MAZE Comprehension Assessment</h2>
+    <h2>Reading & MAZE Comprehension Assessment</h2>
 
       <label>Instructional Reading Level</label>
       <select id="readingLevel">
@@ -519,26 +567,26 @@
     <div class="card">
       <h2>Language Processing</h2>
 
-      <label>Ability to Follow Multi-Step Directions</label>
+      <label>Task Processing & Multi-Step Instruction</label>
       <select id="directions">
         <option>Unable Without Full Support</option>
-        <option>Needs Chunked Instructions</option>
+        <option>Benefits from Guided Instruction</option>
         <option>Can Follow with Occasional Support</option>
         <option>Independent</option>
       </select>
 
-      <label>Response to Chunked Instruction</label>
+      <label>Response to Guided Instruction</label>
       <select id="chunkedInstruction">
-        <option>Significant Improvement</option>
-        <option>Moderate Improvement</option>
-        <option>Minimal Improvement</option>
+        <option>Strong Response to Guided Support</option>
+        <option>Moderate Response to Guided Support</option>
+        <option>Limited Response to Guided Support</option>
       </select>
 
-      <label>Response to Non-Chunked Instruction</label>
+      <label>Independent Task Processing</label>
       <select id="nonChunkedInstruction">
-        <option>Unable to Sustain Understanding</option>
-        <option>Partial Understanding</option>
-        <option>Can Manage Independently</option>
+        <option>Difficulty Sustaining Independent Performance</option>
+        <option>Developing Independent Processing</option>
+        <option>Independent Academic Processing</option>
       </select>
 
       <label>Observed Behaviors / Notes</label>
@@ -548,15 +596,15 @@
   </div>
 
   <div class="card">
-    <h2>Independent vs Supported Task Comparison</h2>
+    <h2>Support Comparison</h2>
 
     <table>
       <thead>
         <tr>
           <th>Task</th>
-          <th>Independent Attempt</th>
-          <th>Supported Attempt</th>
-          <th>Growth Observed</th>
+          <th>Independent Performance</th>
+          <th>Guided Support Performance</th>
+          <th>Observed Accessibility Changes</th>
         </tr>
       </thead>
       <tbody>
@@ -806,7 +854,7 @@
   </div>
 
   <div class="card">
-    <h2>Intervention Planning Summary</h2>
+    <h2>Support Profile</h2>
 
     <div class="summary" id="summaryOutput">
       Complete the assessment to generate an intervention summary.
@@ -860,7 +908,27 @@
     button.classList.add('selected');
     parent.setAttribute('data-value', value);
 
-    updateProgress();
+    window.addEventListener('error', function(event) {
+    console.error('Application Error:', {
+      message: event?.message || 'Unknown error',
+      source: event?.filename || 'Unknown source',
+      line: event?.lineno || 'N/A'
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      if (typeof updateProgress === 'function') {
+        updateProgress();
+      }
+
+      if (typeof generateSummary === 'function') {
+        generateSummary();
+      }
+    } catch (err) {
+      console.error('Initialization Error:', err);
+    }
+  });
   }
 
   function updateProgress() {
@@ -897,7 +965,7 @@
       The student currently shows an independence level categorized as <strong>${independence}</strong>. 
       In language processing tasks, the student demonstrates the following profile: <strong>${directions}</strong>. 
       
-      Based on collected data, recommended next steps include continued scaffolded literacy support, targeted MAZE comprehension intervention, structured writing intervention, explicit vocabulary instruction, and systematic multi-step instruction modeling aligned with the current Ventures literacy framework and academic transition expectations. 
+      Based on collected data, recommended next steps include continued academic language support, targeted comprehension development, structured written expression support, vocabulary reinforcement, and guided instructional accommodations aligned with current literacy and transition expectations. 
       
       The assessment emphasizes the importance of comparing independent performance against scaffolded performance to identify growth potential and instructional responsiveness.
     `;
@@ -988,9 +1056,12 @@
   function generatePrintReport() {
     generateSummary();
 
+    document.getElementById('printCycle').innerText = document.getElementById('reportCycle').value;
+
     document.getElementById('reportStudentInfo').innerHTML = `
       ${createReportItem('Student Name', currentStudent)}
       ${createReportItem('Grade Transition', document.getElementById('gradeLevel').value)}
+      ${createReportItem('Reporting Cycle', document.getElementById('reportCycle').value)}
       ${createReportItem('Assessment Date', document.getElementById('assessmentDate').value)}
       ${createReportItem('MAP Reading', document.getElementById('mapReading').value)}
       ${createReportItem('MAP Language Usage', document.getElementById('mapLanguage').value)}
@@ -1002,8 +1073,8 @@
 
     document.getElementById('reportReading').innerHTML = `
       ${createReportItem('Vocabulary Support', document.getElementById('vocabSupport').value)}
-      ${createReportItem('Main Idea Skills', document.querySelector('[data-group="mainIdea"]').getAttribute('data-value') || 'N/A')}
-      ${createReportItem('Inference Skills', document.querySelector('[data-group="inference"]').getAttribute('data-value') || 'N/A')}
+      ${createReportItem('Main Idea Skills', (document.querySelector('[data-group="mainIdea"]')?.getAttribute('data-value')) || 'N/A')}
+      ${createReportItem('Inference Skills', (document.querySelector('[data-group="inference"]')?.getAttribute('data-value')) || 'N/A')}
       ${createReportItem('Reading Notes', document.getElementById('readingNotes').value)}
     `;
 
