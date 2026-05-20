@@ -1,1204 +1,1107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tier 2 Student Assessment Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #F5F0E8;
-    --surface: #FDFAF4;
-    --surface2: #EDE8DC;
-    --border: #C8BFA8;
-    --ink: #1C1814;
-    --ink2: #5C5248;
-    --ink3: #8C8278;
-    --accent: #C2401A;
-    --accent2: #2B5C3A;
-    --accent3: #1A3A5C;
-    --gold: #B8860B;
-    --reading: #C2401A;
-    --writing: #2B5C3A;
-    --language: #1A3A5C;
-    --r-light: #FDF0EC;
-    --w-light: #EDF5EF;
-    --l-light: #EBF0F5;
-    --tag-r: #FDEAE3;
-    --tag-w: #E3F0E5;
-    --tag-l: #E3EBF4;
-    --shadow: 0 2px 8px rgba(28,24,20,0.08), 0 1px 2px rgba(28,24,20,0.04);
-    --shadow-lg: 0 8px 32px rgba(28,24,20,0.12), 0 2px 8px rgba(28,24,20,0.06);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Instrument Sans', sans-serif;
-    min-height: 100vh;
-    padding: 0;
-  }
-
-  /* HEADER */
-  .header {
-    background: var(--ink);
-    color: var(--bg);
-    padding: 24px 40px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 24px;
-    border-bottom: 3px solid var(--accent);
-  }
-
-  .header-left { flex: 1; }
-
-  .header-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink3);
-    margin-bottom: 8px;
-  }
-
-  .header-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 28px;
-    line-height: 1.1;
-    color: var(--bg);
-    margin-bottom: 4px;
-  }
-
-  .header-sub {
-    font-size: 13px;
-    color: var(--ink3);
-  }
-
-  .deadline-badge {
-    background: var(--accent);
-    color: white;
-    padding: 10px 18px;
-    border-radius: 4px;
-    text-align: center;
-    flex-shrink: 0;
-  }
-
-  .deadline-badge .label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    opacity: 0.8;
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .deadline-badge .time {
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px;
-  }
-
-  /* MAIN LAYOUT */
-  .main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 32px 40px;
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 28px;
-    align-items: start;
-  }
-
-  /* SIDEBAR */
-  .sidebar { position: sticky; top: 24px; }
-
-  .sidebar-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow);
-  }
-
-  .sidebar-title {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink3);
-    margin-bottom: 14px;
-  }
-
-  .student-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 10px 12px;
-    background: transparent;
-    border: 1.5px solid var(--border);
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--ink2);
-    margin-bottom: 8px;
-    text-align: left;
-    transition: all 0.15s;
-  }
-
-  .student-btn:last-child { margin-bottom: 0; }
-
-  .student-btn:hover {
-    border-color: var(--ink);
-    color: var(--ink);
-    background: var(--surface2);
-  }
-
-  .student-btn.active {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: var(--tag-r);
-    font-weight: 600;
-  }
-
-  .student-avatar {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--surface2);
-    border: 1.5px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'DM Serif Display', serif;
-    font-size: 13px;
-    color: var(--ink2);
-    flex-shrink: 0;
-  }
-
-  .student-btn.active .student-avatar {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-  }
-
-  .progress-ring-wrap {
-    margin-bottom: 8px;
-  }
-
-  .progress-mini {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-
-  .progress-mini-label {
-    font-size: 12px;
-    color: var(--ink2);
-  }
-
-  .progress-mini-pct {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--ink3);
-  }
-
-  .progress-bar {
-    height: 4px;
-    background: var(--surface2);
-    border-radius: 2px;
-    overflow: hidden;
-    margin-top: 4px;
-  }
-
-  .progress-fill {
-    height: 100%;
-    border-radius: 2px;
-    transition: width 0.5s ease;
-  }
-
-  .legend-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-    font-size: 12px;
-    color: var(--ink2);
-  }
-
-  .legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  /* MAIN CONTENT */
-  .content { min-width: 0; }
-
-  .student-header {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px 24px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: var(--shadow);
-  }
-
-  .student-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: 24px;
-  }
-
-  .student-meta {
-    font-size: 13px;
-    color: var(--ink3);
-    margin-top: 2px;
-  }
-
-  .export-btn {
-    background: var(--ink);
-    color: var(--bg);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .export-btn:hover { background: var(--accent); }
-
-  /* DOMAIN CARDS */
-  .domain-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 16px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-  }
-
-  .domain-header {
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .domain-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-
-  .domain-icon.reading { background: var(--tag-r); }
-  .domain-icon.writing { background: var(--tag-w); }
-  .domain-icon.language { background: var(--tag-l); }
-
-  .domain-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px;
-    flex: 1;
-  }
-
-  .domain-title.reading { color: var(--reading); }
-  .domain-title.writing { color: var(--writing); }
-  .domain-title.language { color: var(--language); }
-
-  .domain-chevron {
-    color: var(--ink3);
-    font-size: 12px;
-    transition: transform 0.2s;
-  }
-
-  .domain-card.collapsed .domain-chevron { transform: rotate(-90deg); }
-
-  .domain-body { padding: 20px; }
-  .domain-card.collapsed .domain-body { display: none; }
-
-  /* SKILL ROWS */
-  .skill-row {
-    display: grid;
-    grid-template-columns: 1fr 180px 1fr;
-    gap: 16px;
-    align-items: start;
-    padding: 14px 0;
-    border-bottom: 1px dashed var(--border);
-  }
-
-  .skill-row:last-child { border-bottom: none; padding-bottom: 0; }
-
-  .skill-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink);
-    line-height: 1.4;
-  }
-
-  .skill-sub {
-    font-size: 11px;
-    color: var(--ink3);
-    margin-top: 3px;
-    line-height: 1.5;
-  }
-
-  .rating-group {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .rating-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink3);
-    margin-bottom: 4px;
-  }
-
-  .rating-pills {
-    display: flex;
-    gap: 4px;
-  }
-
-  .pill {
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1.5px solid var(--border);
-    font-size: 11px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.12s;
-    color: var(--ink3);
-    background: transparent;
-    white-space: nowrap;
-  }
-
-  .pill:hover { border-color: var(--ink2); color: var(--ink2); }
-  .pill.selected-1 { background: #FEE2E2; border-color: #EF4444; color: #B91C1C; }
-  .pill.selected-2 { background: #FEF3C7; border-color: #F59E0B; color: #92400E; }
-  .pill.selected-3 { background: #D1FAE5; border-color: #10B981; color: #065F46; }
-  .pill.selected-nd { background: var(--surface2); border-color: var(--border); color: var(--ink3); }
-
-  .notes-area {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .notes-textarea {
-    width: 100%;
-    padding: 8px 10px;
-    background: var(--bg);
-    border: 1.5px solid var(--border);
-    border-radius: 6px;
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 12px;
-    color: var(--ink);
-    resize: vertical;
-    min-height: 54px;
-    line-height: 1.5;
-    transition: border-color 0.15s;
-    outline: none;
-  }
-
-  .notes-textarea:focus { border-color: var(--ink2); }
-  .notes-textarea::placeholder { color: var(--ink3); }
-
-  .data-source-row {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
-  .source-chip {
-    padding: 3px 8px;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-    font-size: 10px;
-    font-family: 'DM Mono', monospace;
-    cursor: pointer;
-    color: var(--ink3);
-    transition: all 0.12s;
-    background: transparent;
-  }
-
-  .source-chip:hover { color: var(--ink2); border-color: var(--ink2); }
-  .source-chip.selected { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-
-  /* COLLECTION METHOD SECTION */
-  .method-section {
-    background: var(--surface2);
-    border-radius: 6px;
-    padding: 14px 16px;
-    margin-top: 8px;
-  }
-
-  .method-title {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink3);
-    margin-bottom: 10px;
-  }
-
-  .method-checks {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .method-check {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 12px;
-    color: var(--ink2);
-    cursor: pointer;
-  }
-
-  .method-check input[type="checkbox"] {
-    margin-top: 2px;
-    accent-color: var(--accent2);
-    flex-shrink: 0;
-    cursor: pointer;
-  }
-
-  /* SUMMARY PANEL */
-  .summary-card {
-    background: var(--ink);
-    color: var(--bg);
-    border-radius: 8px;
-    padding: 20px 24px;
-    margin-top: 20px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .summary-card::before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 120px; height: 120px;
-    background: radial-gradient(circle, rgba(194,64,26,0.3) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .summary-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 16px;
-    color: var(--bg);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .overall-textarea {
-    width: 100%;
-    padding: 10px 12px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 6px;
-    color: var(--bg);
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 13px;
-    resize: vertical;
-    min-height: 80px;
-    outline: none;
-    transition: border-color 0.15s;
-    line-height: 1.6;
-  }
-
-  .overall-textarea:focus { border-color: rgba(255,255,255,0.4); }
-  .overall-textarea::placeholder { color: rgba(245,240,232,0.35); }
-
-  .priority-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 14px;
-  }
-
-  .priority-box {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 6px;
-    padding: 12px;
-  }
-
-  .priority-box label {
-    display: block;
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(245,240,232,0.5);
-    margin-bottom: 6px;
-  }
-
-  .priority-select {
-    width: 100%;
-    background: transparent;
-    border: none;
-    color: var(--bg);
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 13px;
-    outline: none;
-    cursor: pointer;
-  }
-
-  .priority-select option { background: #1C1814; color: #F5F0E8; }
-
-  /* NOTIFICATION */
-  .toast {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    background: var(--ink);
-    color: var(--bg);
-    padding: 12px 20px;
-    border-radius: 6px;
-    font-size: 13px;
-    border-left: 3px solid var(--accent2);
-    box-shadow: var(--shadow-lg);
-    transform: translateY(100px);
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 1000;
-  }
-
-  .toast.show { transform: translateY(0); opacity: 1; }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .main { grid-template-columns: 1fr; padding: 20px; }
-    .sidebar { position: static; }
-    .skill-row { grid-template-columns: 1fr; gap: 10px; }
-    .header { padding: 20px; flex-direction: column; }
-  }
-
-  .completion-indicator {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-left: auto;
-  }
-
-  .dot-indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--border);
-  }
-
-  .dot-indicator.filled { background: var(--accent2); }
-
-  /* ALL STUDENTS VIEW */
-  .all-view-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-
-  .student-summary-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 18px;
-    cursor: pointer;
-    transition: all 0.15s;
-    box-shadow: var(--shadow);
-  }
-
-  .student-summary-card:hover {
-    border-color: var(--ink2);
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-1px);
-  }
-
-  .sscard-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px;
-    margin-bottom: 12px;
-  }
-
-  .sscard-bars { display: flex; flex-direction: column; gap: 8px; }
-
-  .sscard-bar-row { display: flex; align-items: center; gap: 8px; }
-
-  .sscard-bar-label {
-    font-size: 11px;
-    color: var(--ink3);
-    width: 60px;
-    flex-shrink: 0;
-  }
-
-  .sscard-bar-track {
-    flex: 1;
-    height: 6px;
-    background: var(--surface2);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .sscard-bar-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 0.5s ease;
-  }
-
-  @media (max-width: 700px) {
-    .all-view-grid { grid-template-columns: 1fr; }
-    .priority-row { grid-template-columns: 1fr; }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Literacy Intervention Assessment Tool</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: #eef2f7;
+      color: #1f2937;
+    }
+
+    h1, h2, h3 {
+      margin-bottom: 10px;
+      color: #1f3b5b;
+    }
+
+    .container {
+      max-width: 1450px;
+      margin: 30px auto;
+      padding: 25px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      border: 1px solid #dbe4f0;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      transition: all 0.25s ease;
+    }
+
+    .student-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .student-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #dfe9f7;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: bold;
+    }
+
+    .student-btn.active {
+      background: #1f3b5b;
+      color: white;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 80px;
+    }
+
+    .score-box {
+      background: #eef4ff;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .rating {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .rating button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #e4e4e4;
+      transition: 0.3s;
+    }
+
+    .rating button.selected {
+      background: #1f3b5b;
+      color: white;
+    }
+
+    .summary {
+      background: #f0fff4;
+      border-left: 6px solid #1c7c54;
+      padding: 15px;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .main-btn {
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.2);
+    }
+
+    .main-btn:hover {
+      opacity: 0.9;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #dce8ff;
+      padding: 5px 10px;
+      border-radius: 20px;
+      margin: 5px 5px 0 0;
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 14px;
+      background: white;
+      border: 1px solid #e2e8f0;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background: #1f3b5b;
+      color: white;
+    }
+
+    .progress {
+      height: 18px;
+      background: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #1f3b5b;
+      width: 0%;
+      transition: width 0.5s;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #555;
+      margin-top: 5px;
+    }
+
+    @media(max-width: 768px){
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .materials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .material-card {
+      border: 1px solid #d8e2f1;
+      border-radius: 10px;
+      padding: 15px;
+      background: #f8fbff;
+    }
+
+    .material-card h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .material-card ul {
+      padding-left: 18px;
+      line-height: 1.7;
+    }
+
+    .print-header {
+      display: none;
+    }
+
+    .print-report {
+      display: none;
+    }
+
+    .report-section {
+      margin-bottom: 20px;
+      border: 1px solid #cfd8e3;
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    .report-section h2 {
+      border-bottom: 2px solid #1f3b5b;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .report-item {
+      padding: 8px;
+      background: #f8fbff;
+      border-radius: 8px;
+      border: 1px solid #dde6f3;
+    }
+
+    .report-label {
+      font-weight: bold;
+      color: #1f3b5b;
+      margin-bottom: 5px;
+    }
+
+    
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+        color: black;
+        font-size: 12px;
+      }
+
+      .container > *:not(.print-report) {
+        display: none !important;
+      }
+
+      .print-report {
+        display: block;
+        padding: 20px;
+      }
+
+      .print-header {
+        display: block;
+        text-align: center;
+        margin-bottom: 25px;
+        border-bottom: 3px solid #1f3b5b;
+        padding-bottom: 15px;
+      }
+
+      .report-section {
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+      }
+
+      .report-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .report-item {
+        border: 1px solid #bbb;
+        background: white;
+        padding: 10px;
+      }
+
+      h1, h2, h3 {
+        color: black;
+      }
+    }
+    }
+  </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-left">
-    <div class="header-eyebrow">Tier 2 Intervention Planning · Lexi's Request</div>
-    <h1 class="header-title">Student Assessment Data Tracker</h1>
-    <div class="header-sub">Leen · Tawfik · Mohamed A — 9th Grade Readiness</div>
+<div class="container">
+
+  <div class="print-report" id="printReport">
+
+    <div class="print-header">
+      <h1>Student Literacy Support Report</h1>
+      <p id="printCycle" style="font-weight:600; margin-top:8px;"></p>
+      <p>Student Literacy & Progress Monitoring</p>
+      <p style="font-size:11px; margin-top:6px;">Literacy Intervention System (LIS) Build 24.3</p>
+    </div>
+
+    <div class="report-section" style="border:1px solid #999; background:#fafafa;">
+      <h2>Student Overview</h2>
+      <div class="report-grid" id="reportStudentInfo"></div>
+      <div style="margin-top:15px; font-size:13px; color:#555;">
+        Summary of current literacy performance and support needs.
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h2>Core Literacy Data</h2>
+      <div class="report-grid" id="reportReading"></div>
+    </div>
+
+    <div class="report-section">
+      <h2>Writing & Academic Language</h2>
+      <div class="report-grid" id="reportWriting"></div>
+    </div>
+
+    <div class="report-section">
+      <h2>Learning Support</h2>
+      <div class="report-grid" id="reportLanguage"></div>
+    </div>
+
+    <div class="report-section" style="border:1px solid #999; background:#fafafa;">
+      <h2>Support Summary</h2>
+      <div id="reportSummary"></div>
+      <div style="margin-top:40px; display:flex; justify-content:space-between; gap:40px;">
+        <div style="flex:1; border-top:1px solid #555; padding-top:6px; text-align:center;">
+          Reviewer Signature
+        </div>
+        <div style="flex:1; border-top:1px solid #555; padding-top:6px; text-align:center;">
+          Academic Support Coordinator
+        </div>
+      </div>
+    </div>
+
   </div>
-  <div class="deadline-badge">
-    <span class="label">Deadline</span>
-    <span class="time">Thu 1:00 PM</span>
+  <h1>Literacy Intervention System</h1>
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+    <p>Comprehensive literacy intervention, comprehension tracking, and academic support platform for middle school transition planning and ongoing intervention support.</p>
+    <div style="background:#1f3b5b; color:white; padding:8px 14px; border-radius:20px; font-size:13px; font-weight:bold; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+      LIS Build 24.3 | Academic Year 2025-2026
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Grade 8 → Grade 9</h2>
+    <div class="student-tabs">
+      <button class="student-btn active" onclick="switchStudent('Leen', this)">Leen</button>
+      <button class="student-btn" onclick="switchStudent('Tawfeeq', this)">Tawfeeq</button>
+      <button class="student-btn" onclick="switchStudent('Mohamed', this)">Mohamed</button>
+    </div>
+
+    <h2 style="margin-top:20px;">Grade 7 → Grade 8</h2>
+    <div class="student-tabs">
+      <button class="student-btn" onclick="switchStudent('Gehan', this)">Gehan</button>
+      <button class="student-btn" onclick="switchStudent('Alyazan', this)">Alyazan</button>
+      <button class="student-btn" onclick="switchStudent('Ibrahim', this)">Ibrahim</button>
+    </div>
+
+    <h2 style="margin-top:20px;">Grade 6 → Grade 7</h2>
+    <div class="student-tabs">
+      <button class="student-btn" onclick="switchStudent('Ali', this)">Ali</button>
+      <button class="student-btn" onclick="switchStudent('Laith', this)">Laith</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Student Information & Transition Tracking</h2>
+
+    <div class="grid">
+      <div>
+        <label>Reviewed By</label>
+        <input type="text" id="reviewedBy" placeholder="Staff Member">
+      </div>
+
+      <div>
+        <label>Reporting Cycle</label>
+        <select id="reportCycle">
+          <option>Semester 1 Report</option>
+          <option>Semester 2 - Mid Report</option>
+          <option>Semester 2 - Final Report</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Student Support Status</label>
+        <select id="supportStatus">
+          <option>Monitoring</option>
+          <option>Strategic Support</option>
+          <option>Intensive Support</option>
+        </select>
+      </div>
+      <div>
+        <label>Previous MAP Reading Score</label>
+        <input type="number" id="mapReading" placeholder="Enter MAP Reading score">
+      </div>
+
+      <div>
+        <label>Previous MAP Language Usage Score</label>
+        <input type="number" id="mapLanguage" placeholder="Enter MAP Language score">
+      </div>
+
+      <div>
+        <label>Current CEFR / Cambridge Level</label>
+        <select id="cefrLevel">
+          <option>A1</option>
+          <option>A2</option>
+          <option>B1</option>
+          <option>B2</option>
+          <option>C1</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid">
+      <div>
+        <label>Student Name</label>
+        <input type="text" id="studentName" readonly>
+      </div>
+
+      <div>
+        <label>Grade Level</label>
+        <select id="gradeLevel">
+          <option>Grade 8 → Grade 9</option>
+          <option>Grade 7 → Grade 8</option>
+          <option>Grade 6 → Grade 7</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Assessment / Progress Monitoring Date</label>
+        <input type="date" id="assessmentDate">
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+    <h2>Reading & MAZE Comprehension Assessment</h2>
+
+      <label>Instructional Reading Level</label>
+      <select id="readingLevel">
+        <option>Below Grade 3</option>
+        <option>Grades 3-4</option>
+        <option>Grades 5-6</option>
+        <option>Grades 7-8</option>
+        <option>Grade Level</option>
+      </select>
+
+      <label>Reading Fluency (WPM)</label>
+
+      <label>MAZE Comprehension Score</label>
+      <input type="number" id="mazeScore" placeholder="Enter MAZE score">
+      <input type="number" id="fluency">
+
+      <label>Main Idea Identification</label>
+      <div class="rating" data-group="mainIdea">
+        <button onclick="setRating(this, 'Limited')">Limited</button>
+        <button onclick="setRating(this, 'Developing')">Developing</button>
+        <button onclick="setRating(this, 'Proficient')">Proficient</button>
+      </div>
+
+      <label>Inference Skills</label>
+      <div class="rating" data-group="inference">
+        <button onclick="setRating(this, 'Limited')">Limited</button>
+        <button onclick="setRating(this, 'Developing')">Developing</button>
+        <button onclick="setRating(this, 'Proficient')">Proficient</button>
+      </div>
+
+      <label>Vocabulary Understanding</label>
+      <select id="vocabSupport">
+        <option>Needs Full Support</option>
+        <option>Needs Some Support</option>
+        <option>Independent</option>
+      </select>
+
+      <label>Reading Notes</label>
+      <textarea id="readingNotes"></textarea>
+    </div>
+
+    <div class="card">
+      <h2>Writing Assessment</h2>
+
+      <label>Sentence Construction</label>
+      <select id="sentenceLevel">
+        <option>Incomplete Sentences</option>
+        <option>Simple Complete Sentences</option>
+        <option>Expanded Sentences</option>
+        <option>Complex Sentences</option>
+      </select>
+
+      <label>Paragraph Organization</label>
+      <select id="paragraphLevel">
+        <option>Unable to Organize</option>
+        <option>Developing Organization</option>
+        <option>Mostly Organized</option>
+        <option>Independent Organization</option>
+      </select>
+
+      <label>Prompt Response Ability</label>
+      <div class="rating" data-group="promptResponse">
+        <button onclick="setRating(this, 'Limited')">Limited</button>
+        <button onclick="setRating(this, 'Developing')">Developing</button>
+        <button onclick="setRating(this, 'Proficient')">Proficient</button>
+      </div>
+
+      <label>Independence Level</label>
+      <select id="independence">
+        <option>Highly Dependent on Scaffolds</option>
+        <option>Moderately Dependent</option>
+        <option>Occasionally Needs Support</option>
+        <option>Mostly Independent</option>
+      </select>
+
+      <label>Scaffold Dependence During Writing</label>
+      <select id="writingScaffold">
+        <option>Requires Full Scaffold</option>
+        <option>Benefits from Guided Support</option>
+        <option>Minimal Scaffolds Needed</option>
+        <option>Independent Writer</option>
+      </select>
+
+      <label>Writing Sample Notes</label>
+      <textarea id="writingNotes"></textarea>
+    </div>
+
+    <div class="card">
+      <h2>Language Processing</h2>
+
+      <label>Task Processing & Multi-Step Instruction</label>
+      <select id="directions">
+        <option>Unable Without Full Support</option>
+        <option>Benefits from Guided Instruction</option>
+        <option>Can Follow with Occasional Support</option>
+        <option>Independent</option>
+      </select>
+
+      <label>Response to Guided Instruction</label>
+      <select id="chunkedInstruction">
+        <option>Strong Response to Guided Support</option>
+        <option>Moderate Response to Guided Support</option>
+        <option>Limited Response to Guided Support</option>
+      </select>
+
+      <label>Independent Task Processing</label>
+      <select id="nonChunkedInstruction">
+        <option>Difficulty Sustaining Independent Performance</option>
+        <option>Developing Independent Processing</option>
+        <option>Independent Academic Processing</option>
+      </select>
+
+      <label>Observed Behaviors / Notes</label>
+      <textarea id="processingNotes"></textarea>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>Support Comparison</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Independent Performance</th>
+          <th>Guided Support Performance</th>
+          <th>Observed Accessibility Changes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" placeholder="Example: Reading comprehension"></td>
+          <td><textarea placeholder="Student performance independently"></textarea></td>
+          <td><textarea placeholder="Performance with scaffolds/support"></textarea></td>
+          <td><textarea placeholder="Observed differences"></textarea></td>
+        </tr>
+
+        <tr>
+          <td><input type="text" placeholder="Example: Writing response"></td>
+          <td><textarea></textarea></td>
+          <td><textarea></textarea></td>
+          <td><textarea></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Instructional Materials & Intervention Resources</h2>
+
+    <div class="materials-grid">
+      <div class="material-card">
+        <h3>Ventures Second Edition</h3>
+        <ul>
+          <li>Core literacy curriculum</li>
+          <li>Grammar and vocabulary development</li>
+          <li>Systematic language progression</li>
+          <li>CEFR-aligned instruction</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>MAZE Comprehension</h3>
+        <ul>
+          <li>Reading comprehension monitoring</li>
+          <li>Inference and accuracy tracking</li>
+          <li>Progress benchmarking</li>
+          <li>Intervention response analysis</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>Cambridge / CEFR Assessment</h3>
+        <ul>
+          <li>A1-C1 proficiency tracking</li>
+          <li>Language acquisition monitoring</li>
+          <li>Academic readiness evaluation</li>
+          <li>Progress comparison over time</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>MAP Growth Data</h3>
+        <ul>
+          <li>Reading benchmark data</li>
+          <li>Language usage growth trends</li>
+          <li>Longitudinal academic tracking</li>
+          <li>Instructional planning support</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 style="margin-top:25px;">Program Resources & Assessment Framework</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Resource / Assessment</th>
+          <th>Purpose</th>
+          <th>Current Usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ventures Second Edition - Level 3</td>
+          <td>Core literacy instruction and language systems development</td>
+          <td>Primary intervention curriculum</td>
+        </tr>
+        <tr>
+          <td>MAZE Comprehension</td>
+          <td>Reading comprehension progress monitoring</td>
+          <td>Used for comprehension tracking and data collection</td>
+        </tr>
+        
+        <tr>
+          <td>Cambridge English Assessment / CEFR Tracking</td>
+          <td>Track language acquisition and proficiency progression</td>
+          <td>Used for CEFR-aligned intervention monitoring</td>
+        </tr>
+        <tr>
+          <td>MAP Assessment Data</td>
+          <td>Benchmark growth and achievement trends</td>
+          <td>Supporting assessment data point</td>
+        </tr>
+        <tr>
+          <td>CEFR-Based Proficiency Tracking</td>
+          <td>Language proficiency progression</td>
+          <td>Long-term literacy monitoring</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Assessment Materials & Skill-Based Testing Resources</h2>
+
+    <div class="materials-grid">
+
+      <div class="material-card">
+        <h3>Reading Fluency Assessment</h3>
+        <ul>
+          <li>1-minute oral reading passages</li>
+          <li>Grade-leveled nonfiction texts</li>
+          <li>WPM tracking sheets</li>
+          <li>Error and decoding analysis</li>
+          <li>Repeated reading comparison</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>Comprehension Testing</h3>
+        <ul>
+          <li>MAZE comprehension passages</li>
+          <li>Main idea questions</li>
+          <li>Inference-based questions</li>
+          <li>Vocabulary in context tasks</li>
+          <li>Short-response comprehension prompts</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>Writing Assessment Tasks</h3>
+        <ul>
+          <li>Sentence expansion activities</li>
+          <li>Paragraph organization prompts</li>
+          <li>Short constructed responses</li>
+          <li>Opinion and narrative prompts</li>
+          <li>Independent vs scaffolded writing samples</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>Vocabulary & Language Skills</h3>
+        <ul>
+          <li>Academic vocabulary matching</li>
+          <li>Context clue exercises</li>
+          <li>Grammar correction tasks</li>
+          <li>Sentence completion activities</li>
+          <li>Tier 2 vocabulary checks</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>Language Processing Evaluation</h3>
+        <ul>
+          <li>Multi-step direction tasks</li>
+          <li>Chunked instruction comparison</li>
+          <li>Listening comprehension checks</li>
+          <li>Instruction recall tasks</li>
+          <li>Sequencing activities</li>
+        </ul>
+      </div>
+
+      <div class="material-card">
+        <h3>Cambridge / CEFR Progression</h3>
+        <ul>
+          <li>A1-A2 reading tasks</li>
+          <li>B1 comprehension passages</li>
+          <li>Cambridge-style writing prompts</li>
+          <li>Speaking rubric tracking</li>
+          <li>CEFR-aligned benchmark checks</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <table style="margin-top:25px;">
+      <thead>
+        <tr>
+          <th>Skill Area</th>
+          <th>Suggested Material</th>
+          <th>Assessment Method</th>
+          <th>Frequency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Reading Fluency</td>
+          <td>Grade-leveled passages</td>
+          <td>1-minute oral reading</td>
+          <td>Biweekly</td>
+        </tr>
+        <tr>
+          <td>Reading Comprehension</td>
+          <td>MAZE passages</td>
+          <td>Timed comprehension tasks</td>
+          <td>Weekly</td>
+        </tr>
+        <tr>
+          <td>Writing</td>
+          <td>Constructed response prompts</td>
+          <td>Independent + scaffolded comparison</td>
+          <td>1-2 times weekly</td>
+        </tr>
+        <tr>
+          <td>Vocabulary</td>
+          <td>Ventures vocabulary sets</td>
+          <td>Context/application activities</td>
+          <td>Weekly</td>
+        </tr>
+        <tr>
+          <td>Language Processing</td>
+          <td>Teacher-created direction tasks</td>
+          <td>Observation + completion tracking</td>
+          <td>Ongoing</td>
+        </tr>
+        <tr>
+          <td>CEFR / Cambridge</td>
+          <td>Cambridge-aligned assessments</td>
+          <td>Benchmark proficiency checks</td>
+          <td>Every 6 weeks</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Data Collection Recommendations</h2>
+
+    <div class="tag">Use existing classroom texts</div>
+    <div class="tag">Collect 1-2 writing samples weekly</div>
+    <div class="tag">Compare independent vs scaffolded tasks</div>
+    <div class="tag">Use qualitative + quantitative data</div>
+    <div class="tag">Track comprehension trends</div>
+    <div class="tag">Monitor instructional response</div>
+
+    <div class="score-box">
+      <h3>Assessment Completion</h3>
+      <div class="progress">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="small" id="progressText">0% Completed</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Support Profile</h2>
+
+    <div class="summary" id="summaryOutput">
+      Complete the assessment to generate an intervention summary.
+    </div>
+
+    <div class="btn-group">
+      <button class="main-btn" onclick="generateSummary()">Generate Summary</button>
+      <button class="main-btn" onclick="saveData()">Save Student Data</button>
+      <button class="main-btn" onclick="loadData()">Load Student Data</button>
+      <button class="main-btn" onclick="generatePrintReport()">Print Report</button>
+      <button class="main-btn" onclick="resetForm()">Reset Form</button>
+    </div>
   </div>
 </div>
-
-<div class="main">
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="sidebar-section">
-      <div class="sidebar-title">Students</div>
-      <button class="student-btn active" onclick="switchStudent('all')">
-        <div class="student-avatar" style="font-size:11px;">ALL</div>
-        Overview
-      </button>
-      <button class="student-btn" onclick="switchStudent('leen')">
-        <div class="student-avatar">L</div>
-        Leen
-      </button>
-      <button class="student-btn" onclick="switchStudent('tawfik')">
-        <div class="student-avatar">T</div>
-        Tawfik
-      </button>
-      <button class="student-btn" onclick="switchStudent('mohameda')">
-        <div class="student-avatar">M</div>
-        Mohamed A
-      </button>
-    </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-title">Progress</div>
-      <div id="sidebar-progress"></div>
-    </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-title">Domain Legend</div>
-      <div class="legend-row"><div class="legend-dot" style="background:var(--reading)"></div> Reading</div>
-      <div class="legend-row"><div class="legend-dot" style="background:var(--writing)"></div> Writing</div>
-      <div class="legend-row"><div class="legend-dot" style="background:var(--language)"></div> Language Processing</div>
-    </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-title">Days Remaining</div>
-      <div style="font-family:'DM Serif Display',serif;font-size:32px;color:var(--accent);" id="days-remaining">—</div>
-      <div style="font-size:12px;color:var(--ink3);margin-top:4px;">teaching days</div>
-    </div>
-  </div>
-
-  <!-- MAIN CONTENT -->
-  <div class="content" id="main-content">
-    <!-- rendered by JS -->
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
 
 <script>
-// ─── DATA MODEL ────────────────────────────────────────────────────────────────
-const STUDENTS = ['leen','tawfik','mohameda'];
-const STUDENT_NAMES = { leen:'Leen', tawfik:'Tawfik', mohameda:'Mohamed A' };
+  let currentStudent = 'Leen';
 
-const DOMAINS = [
-  {
-    id:'reading', label:'Reading', icon:'📖', cls:'reading',
-    skills:[
-      {
-        id:'fluency_comp',
-        label:'Instructional Reading Level',
-        sub:'Fluency + comprehension baseline',
-        ratingKey:'fluency_comp_rating',
-        notesKey:'fluency_comp_notes',
-        sourcesKey:'fluency_comp_sources',
-      },
-      {
-        id:'main_idea',
-        label:'Main Idea Identification',
-        sub:'Can student identify central ideas independently?',
-        ratingKey:'main_idea_rating',
-        notesKey:'main_idea_notes',
-        sourcesKey:'main_idea_sources',
-      },
-      {
-        id:'inference',
-        label:'Basic Inferences',
-        sub:'Drawing conclusions from text',
-        ratingKey:'inference_rating',
-        notesKey:'inference_notes',
-        sourcesKey:'inference_sources',
-      },
-      {
-        id:'vocab',
-        label:'Grade-Level Vocabulary',
-        sub:'With and without support — note difference',
-        ratingKey:'vocab_rating',
-        notesKey:'vocab_notes',
-        sourcesKey:'vocab_sources',
-      },
-    ],
-    methods:[
-      'Use existing class texts at varying levels (no separate testing block)',
-      'MAP data (partial — note limitations)',
-      'Observe during read-alouds or shared reading',
-      'Running record or miscue analysis',
-    ]
-  },
-  {
-    id:'writing', label:'Writing', icon:'✍️', cls:'writing',
-    skills:[
-      {
-        id:'sentences',
-        label:'Complete Sentences',
-        sub:'Consistently produces grammatically complete sentences',
-        ratingKey:'sentences_rating',
-        notesKey:'sentences_notes',
-        sourcesKey:'sentences_sources',
-      },
-      {
-        id:'paragraphs',
-        label:'Organized Paragraphs',
-        sub:'Logical structure: topic, supporting detail, conclusion',
-        ratingKey:'paragraphs_rating',
-        notesKey:'paragraphs_notes',
-        sourcesKey:'paragraphs_sources',
-      },
-      {
-        id:'prompt_response',
-        label:'Written Response to Prompts',
-        sub:'Responds meaningfully to open-ended prompts',
-        ratingKey:'prompt_response_rating',
-        notesKey:'prompt_response_notes',
-        sourcesKey:'prompt_response_sources',
-      },
-      {
-        id:'independence',
-        label:'Independence vs. Scaffold Reliance',
-        sub:'Compare independent vs. supported attempt (same assignment)',
-        ratingKey:'independence_rating',
-        notesKey:'independence_notes',
-        sourcesKey:'independence_sources',
-      },
-    ],
-    methods:[
-      'Short scaffolded writing samples (1–2 per week max)',
-      'Modify one upcoming assignment: independent attempt + supported attempt',
-      'Collect existing classwork samples (avoid separate testing block)',
-      'Final exam writing portions',
-    ]
-  },
-  {
-    id:'language', label:'Language Processing', icon:'🧠', cls:'language',
-    skills:[
-      {
-        id:'multi_step',
-        label:'Multi-Step Directions',
-        sub:'Can student follow sequential instructions without prompting?',
-        ratingKey:'multi_step_rating',
-        notesKey:'multi_step_notes',
-        sourcesKey:'multi_step_sources',
-      },
-      {
-        id:'chunked',
-        label:'Chunked vs. Non-Chunked Instruction',
-        sub:'Note performance difference — does chunking help significantly?',
-        ratingKey:'chunked_rating',
-        notesKey:'chunked_notes',
-        sourcesKey:'chunked_sources',
-      },
-    ],
-    methods:[
-      'Observe during regular instruction — no separate block needed',
-      'Give the same instruction both ways; note performance difference',
-      'Track in-class responses to directions across subject areas',
-    ]
+  const studentProfiles = {
+    'Leen': {},
+    'Tawfeeq': {},
+    'Mohamed': {},
+    'Gehan': {},
+    'Alyazan': {},
+    'Ibrahim': {},
+    'Ali': {},
+    'Laith': {}
+  };
+
+  document.getElementById('studentName').value = currentStudent;
+
+  function switchStudent(name, button) {
+    currentStudent = name;
+    document.getElementById('studentName').value = name;
+
+    document.querySelectorAll('.student-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    button.classList.add('active');
+    loadData();
   }
-];
 
-const SOURCES = ['Classwork','Final Exam','MAP','Observation','Writing Sample','Read-Aloud','Other'];
-const RATINGS = [
-  { val:'1', label:'Below', cls:'selected-1' },
-  { val:'2', label:'Emerging', cls:'selected-2' },
-  { val:'3', label:'Meeting', cls:'selected-3' },
-  { val:'nd', label:'N/D', cls:'selected-nd' },
-];
+  function setRating(button, value) {
+    const parent = button.parentElement;
 
-// Load from localStorage
-function loadData() {
-  try { return JSON.parse(localStorage.getItem('tier2_data') || '{}'); } catch(e) { return {}; }
-}
-
-function saveData(data) {
-  localStorage.setItem('tier2_data', JSON.stringify(data));
-}
-
-let appData = loadData();
-let currentStudent = 'all';
-
-function get(student, key, fallback='') {
-  return (appData[student] && appData[student][key] !== undefined) ? appData[student][key] : fallback;
-}
-
-function set(student, key, value) {
-  if (!appData[student]) appData[student] = {};
-  appData[student][key] = value;
-  saveData(appData);
-  updateSidebarProgress();
-}
-
-// ─── COMPUTE PROGRESS ──────────────────────────────────────────────────────────
-function getProgress(student) {
-  const total = DOMAINS.reduce((s,d) => s + d.skills.length, 0);
-  let filled = 0;
-  DOMAINS.forEach(d => d.skills.forEach(sk => {
-    if (get(student, sk.ratingKey, '') !== '') filled++;
-  }));
-  return { pct: total > 0 ? Math.round(filled/total*100) : 0, filled, total };
-}
-
-function updateSidebarProgress() {
-  const el = document.getElementById('sidebar-progress');
-  if (!el) return;
-  el.innerHTML = STUDENTS.map(s => {
-    const { pct } = getProgress(s);
-    const color = pct === 100 ? 'var(--accent2)' : pct > 50 ? 'var(--gold)' : 'var(--accent)';
-    return `
-      <div class="progress-mini">
-        <span class="progress-mini-label">${STUDENT_NAMES[s]}</span>
-        <span class="progress-mini-pct" style="color:${color}">${pct}%</span>
-      </div>
-      <div class="progress-bar" style="margin-bottom:12px">
-        <div class="progress-fill" style="width:${pct}%;background:${color}"></div>
-      </div>`;
-  }).join('');
-}
-
-// ─── RENDER ────────────────────────────────────────────────────────────────────
-function renderAll() {
-  const el = document.getElementById('main-content');
-
-  // Overview cards
-  let html = `<div class="all-view-grid">`;
-  STUDENTS.forEach(s => {
-    const { pct } = getProgress(s);
-    const dPcts = DOMAINS.map(d => {
-      const total = d.skills.length;
-      let filled = d.skills.filter(sk => get(s, sk.ratingKey,'') !== '').length;
-      return { label: d.label, cls: d.cls, pct: Math.round(filled/total*100) };
-    });
-    html += `
-      <div class="student-summary-card" onclick="switchStudent('${s}')">
-        <div class="sscard-name">${STUDENT_NAMES[s]}</div>
-        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);margin-bottom:10px;">Overall ${pct}% complete</div>
-        <div class="sscard-bars">
-          ${dPcts.map(d => `
-            <div class="sscard-bar-row">
-              <div class="sscard-bar-label">${d.label}</div>
-              <div class="sscard-bar-track">
-                <div class="sscard-bar-fill" style="width:${d.pct}%;background:var(--${d.cls})"></div>
-              </div>
-            </div>`).join('')}
-        </div>
-      </div>`;
-  });
-  html += `</div>`;
-
-  // Lexi's note
-  html += `
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:0;box-shadow:var(--shadow)">
-      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;">📨 Lexi's Data Collection Principles</div>
-      <div style="display:grid;gap:8px;">
-        ${[
-          'Avoid "gut feelings" — use qualitative or quantitative data beyond MAP',
-          'Use existing class texts at varying levels — no separate testing block required',
-          'Short, scaffolded writing samples (1–2 per week max)',
-          'Modify one upcoming assignment to include: independent attempt + supported attempt',
-          'Bushra has been added to support collection efforts',
-        ].map(p => `<div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink2)"><span style="color:var(--accent2);margin-top:2px">✓</span>${p}</div>`).join('')}
-      </div>
-    </div>`;
-
-  el.innerHTML = html;
-}
-
-function renderStudent(student) {
-  const el = document.getElementById('main-content');
-  const name = STUDENT_NAMES[student];
-  const { pct, filled, total } = getProgress(student);
-
-  let html = `
-    <div class="student-header">
-      <div>
-        <div class="student-name">${name}</div>
-        <div class="student-meta">Tier 2 · 9th Grade Readiness Assessment · ${filled}/${total} skills rated</div>
-      </div>
-      <div style="display:flex;gap:10px;align-items:center">
-        <div style="text-align:right;margin-right:8px">
-          <div style="font-family:'DM Mono',monospace;font-size:20px;color:${pct===100?'var(--accent2)':pct>50?'var(--gold)':'var(--accent)'}">${pct}%</div>
-          <div style="font-size:11px;color:var(--ink3)">complete</div>
-        </div>
-        <button class="export-btn" onclick="exportStudent('${student}')">⬇ Export Notes</button>
-      </div>
-    </div>`;
-
-  DOMAINS.forEach(domain => {
-    html += `<div class="domain-card" id="domain-${student}-${domain.id}">
-      <div class="domain-header" onclick="toggleDomain('${student}','${domain.id}')">
-        <div class="domain-icon ${domain.cls}">${domain.icon}</div>
-        <div class="domain-title ${domain.cls}">${domain.label}</div>
-        <div class="completion-indicator">
-          ${domain.skills.map(sk => `<div class="dot-indicator ${get(student,sk.ratingKey,'')!==''?'filled':''}"></div>`).join('')}
-        </div>
-        <div class="domain-chevron">▼</div>
-      </div>
-      <div class="domain-body">`;
-
-    domain.skills.forEach(sk => {
-      const rating = get(student, sk.ratingKey, '');
-      const notes = get(student, sk.notesKey, '');
-      const sources = get(student, sk.sourcesKey, []);
-      html += `
-        <div class="skill-row">
-          <div>
-            <div class="skill-label">${sk.label}</div>
-            <div class="skill-sub">${sk.sub}</div>
-          </div>
-          <div class="rating-group">
-            <div class="rating-label">Performance Level</div>
-            <div class="rating-pills">
-              ${RATINGS.map(r => `
-                <button class="pill ${rating===r.val?r.cls:''}"
-                  onclick="setRating('${student}','${sk.ratingKey}','${r.val}','${r.cls}',this)">
-                  ${r.label}
-                </button>`).join('')}
-            </div>
-          </div>
-          <div class="notes-area">
-            <textarea class="notes-textarea" placeholder="Observations, evidence, data source…"
-              oninput="set('${student}','${sk.notesKey}',this.value)">${notes}</textarea>
-            <div class="rating-label" style="margin-top:2px">Data Source</div>
-            <div class="data-source-row">
-              ${SOURCES.map(src => `
-                <button class="source-chip ${sources.includes(src)?'selected':''}"
-                  onclick="toggleSource('${student}','${sk.sourcesKey}','${src}',this)">
-                  ${src}
-                </button>`).join('')}
-            </div>
-          </div>
-        </div>`;
+    parent.querySelectorAll('button').forEach(btn => {
+      btn.classList.remove('selected');
     });
 
-    // Collection methods
-    html += `<div class="method-section">
-      <div class="method-title">Suggested Collection Methods</div>
-      <div class="method-checks">
-        ${domain.methods.map((m,i) => {
-          const key = `${domain.id}_method_${i}`;
-          const checked = get(student, key, false);
-          return `<label class="method-check">
-            <input type="checkbox" ${checked?'checked':''} onchange="set('${student}','${key}',this.checked)">
-            ${m}
-          </label>`;
-        }).join('')}
-      </div>
-    </div>`;
+    button.classList.add('selected');
+    parent.setAttribute('data-value', value);
 
-    html += `</div></div>`; // domain-body, domain-card
+    window.addEventListener('error', function(event) {
+    console.error('Application Error:', {
+      message: event?.message || 'Unknown error',
+      source: event?.filename || 'Unknown source',
+      line: event?.lineno || 'N/A'
+    });
   });
 
-  // Summary
-  const summary = get(student, 'overall_summary','');
-  const urgency = get(student, 'urgency', '');
-  const support = get(student, 'support_type', '');
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      if (typeof updateProgress === 'function') {
+        updateProgress();
+      }
 
-  html += `
-    <div class="summary-card">
-      <div class="summary-title">📋 Overall Summary & Recommendations</div>
-      <textarea class="overall-textarea" placeholder="Summarize findings, key patterns, immediate needs, and recommended interventions for 9th grade…"
-        oninput="set('${student}','overall_summary',this.value)">${summary}</textarea>
-      <div class="priority-row">
-        <div class="priority-box">
-          <label>Urgency Level</label>
-          <select class="priority-select" onchange="set('${student}','urgency',this.value)">
-            <option value="" ${urgency===''?'selected':''}>Select…</option>
-            <option value="critical" ${urgency==='critical'?'selected':''}>🔴 Critical — needs immediate plan</option>
-            <option value="high" ${urgency==='high'?'selected':''}>🟠 High — plan before 9th grade</option>
-            <option value="moderate" ${urgency==='moderate'?'selected':''}>🟡 Moderate — monitor closely</option>
-            <option value="low" ${urgency==='low'?'selected':''}>🟢 Low — continue Tier 2 supports</option>
-          </select>
-        </div>
-        <div class="priority-box">
-          <label>Recommended Support Type</label>
-          <select class="priority-select" onchange="set('${student}','support_type',this.value)">
-            <option value="" ${support===''?'selected':''}>Select…</option>
-            <option value="intensive" ${support==='intensive'?'selected':''}>Intensive Intervention (Tier 3)</option>
-            <option value="tier2" ${support==='tier2'?'selected':''}>Continue Tier 2 with modifications</option>
-            <option value="scaffolds" ${support==='scaffolds'?'selected':''}>Targeted scaffolds in-class</option>
-            <option value="sped" ${support==='sped'?'selected':''}>Refer for SpEd evaluation</option>
-            <option value="ell" ${support==='ell'?'selected':''}>ELL-specific supports</option>
-          </select>
-        </div>
-      </div>
-    </div>`;
-
-  el.innerHTML = html;
-}
-
-// ─── INTERACTIONS ───────────────────────────────────────────────────────────────
-function toggleDomain(student, domainId) {
-  const card = document.getElementById(`domain-${student}-${domainId}`);
-  card.classList.toggle('collapsed');
-}
-
-function setRating(student, key, val, cls, btn) {
-  set(student, key, val);
-  const pills = btn.closest('.rating-pills').querySelectorAll('.pill');
-  pills.forEach(p => { p.className = 'pill'; });
-  btn.classList.add(cls);
-  // refresh dot indicators
-  const dots = document.querySelectorAll('.dot-indicator');
-  // re-render header dots
-  DOMAINS.forEach(d => d.skills.forEach(sk => {
-    if (sk.ratingKey === key) {
-      // update completion dots in domain header
-      renderDomainDots(student, d);
+      if (typeof generateSummary === 'function') {
+        generateSummary();
+      }
+    } catch (err) {
+      console.error('Initialization Error:', err);
     }
-  }));
-  showToast('Rating saved');
-}
-
-function renderDomainDots(student, domain) {
-  const header = document.querySelector(`#domain-${student}-${domain.id} .completion-indicator`);
-  if (!header) return;
-  header.innerHTML = domain.skills.map(sk =>
-    `<div class="dot-indicator ${get(student,sk.ratingKey,'')!==''?'filled':''}"></div>`
-  ).join('');
-}
-
-function toggleSource(student, key, src, btn) {
-  let sources = get(student, key, []);
-  if (!Array.isArray(sources)) sources = [];
-  if (sources.includes(src)) {
-    sources = sources.filter(s => s !== src);
-    btn.classList.remove('selected');
-  } else {
-    sources.push(src);
-    btn.classList.add('selected');
+  });
   }
-  set(student, key, sources);
-}
 
-function switchStudent(id) {
-  currentStudent = id;
-  document.querySelectorAll('.student-btn').forEach(b => b.classList.remove('active'));
-  const idx = ['all','leen','tawfik','mohameda'].indexOf(id);
-  document.querySelectorAll('.student-btn')[idx].classList.add('active');
-  if (id === 'all') renderAll();
-  else renderStudent(id);
-  updateSidebarProgress();
-}
+  function updateProgress() {
+    const fields = document.querySelectorAll('input, select, textarea');
+    let filled = 0;
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove('show'), 2000);
-}
-
-function exportStudent(student) {
-  const name = STUDENT_NAMES[student];
-  let text = `TIER 2 ASSESSMENT DATA — ${name.toUpperCase()}\n`;
-  text += `Generated: ${new Date().toLocaleString()}\n`;
-  text += `${'='.repeat(50)}\n\n`;
-
-  DOMAINS.forEach(d => {
-    text += `${d.label.toUpperCase()}\n${'-'.repeat(30)}\n`;
-    d.skills.forEach(sk => {
-      const rating = get(student, sk.ratingKey, 'Not rated');
-      const rLabel = RATINGS.find(r=>r.val===rating)?.label || rating;
-      const notes = get(student, sk.notesKey, '');
-      const sources = get(student, sk.sourcesKey, []);
-      text += `\n${sk.label}\n`;
-      text += `  Level: ${rLabel}\n`;
-      if (notes) text += `  Notes: ${notes}\n`;
-      if (sources.length) text += `  Sources: ${sources.join(', ')}\n`;
+    fields.forEach(field => {
+      if(field.value.trim() !== '') {
+        filled++;
+      }
     });
-    text += `\n`;
+
+    const percent = Math.round((filled / fields.length) * 100);
+
+    document.getElementById('progressFill').style.width = percent + '%';
+    document.getElementById('progressText').innerText = percent + '% Completed';
+  }
+
+  document.querySelectorAll('input, select, textarea').forEach(field => {
+    field.addEventListener('input', updateProgress);
   });
 
-  const summary = get(student, 'overall_summary','');
-  const urgency = get(student, 'urgency','');
-  const support = get(student, 'support_type','');
-  text += `OVERALL SUMMARY\n${'-'.repeat(30)}\n`;
-  text += `Urgency: ${urgency || 'Not set'}\n`;
-  text += `Support Type: ${support || 'Not set'}\n`;
-  if (summary) text += `\nNotes:\n${summary}\n`;
+  function generateSummary() {
+    const readingLevel = document.getElementById('readingLevel').value;
+    const fluency = document.getElementById('fluency').value;
+    const mapReading = document.getElementById('mapReading').value;
+    const cefrLevel = document.getElementById('cefrLevel').value;
+    const independence = document.getElementById('independence').value;
+    const directions = document.getElementById('directions').value;
 
-  const blob = new Blob([text], { type:'text/plain' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `${name.replace(' ','_')}_Assessment_${new Date().toISOString().slice(0,10)}.txt`;
-  a.click();
-  showToast('Notes exported!');
-}
+    const summary = `
+      <strong>${currentStudent}</strong> currently demonstrates a reading instructional level of <strong>${readingLevel}</strong>. 
+      Reading fluency data indicates approximately <strong>${fluency || 'N/A'} WPM</strong>. Current MAZE comprehension data and classroom literacy performance suggest ongoing monitoring of comprehension accuracy and reading independence. Previous MAP Reading data currently reflects a score of <strong>${mapReading || 'N/A'}</strong>, while Cambridge assessment data places the student at approximately <strong>${cefrLevel}</strong> proficiency. 
+      The student currently shows an independence level categorized as <strong>${independence}</strong>. 
+      In language processing tasks, the student demonstrates the following profile: <strong>${directions}</strong>. 
+      
+      Based on collected data, recommended next steps include continued academic language support, targeted comprehension development, structured written expression support, vocabulary reinforcement, and guided instructional accommodations aligned with current literacy and transition expectations. 
+      
+      The assessment emphasizes the importance of comparing independent performance against scaffolded performance to identify growth potential and instructional responsiveness.
+    `;
 
-// Days remaining (rough estimate — 8 teaching days from now)
-document.getElementById('days-remaining').textContent = '< 8';
+    document.getElementById('summaryOutput').innerHTML = summary;
+  }
 
-// Init
-updateSidebarProgress();
-renderAll();
+  function gatherFormData() {
+    const data = {};
+
+    document.querySelectorAll('input, select, textarea').forEach(field => {
+      data[field.id || Math.random()] = field.value;
+    });
+
+    document.querySelectorAll('.rating').forEach(group => {
+      data[group.getAttribute('data-group')] = group.getAttribute('data-value') || '';
+    });
+
+    return data;
+  }
+
+  function saveData() {
+    studentProfiles[currentStudent] = gatherFormData();
+    localStorage.setItem('literacyProfiles', JSON.stringify(studentProfiles));
+    alert(currentStudent + ' data saved successfully.');
+  }
+
+  function loadData() {
+    const saved = JSON.parse(localStorage.getItem('literacyProfiles'));
+
+    if(saved) {
+      Object.assign(studentProfiles, saved);
+    }
+
+    const data = studentProfiles[currentStudent];
+
+    document.querySelectorAll('input, select, textarea').forEach(field => {
+      if(field.id && data[field.id] !== undefined) {
+        field.value = data[field.id];
+      }
+    });
+
+    document.querySelectorAll('.rating').forEach(group => {
+      const groupName = group.getAttribute('data-group');
+      const value = data[groupName];
+
+      group.querySelectorAll('button').forEach(btn => {
+        btn.classList.remove('selected');
+
+        if(btn.innerText === value) {
+          btn.classList.add('selected');
+        }
+      });
+    });
+
+    updateProgress();
+  }
+
+  function resetForm() {
+    document.querySelectorAll('input, textarea').forEach(field => {
+      if(field.id !== 'studentName') {
+        field.value = '';
+      }
+    });
+
+    document.querySelectorAll('select').forEach(select => {
+      select.selectedIndex = 0;
+    });
+
+    document.querySelectorAll('.rating button').forEach(btn => {
+      btn.classList.remove('selected');
+    });
+
+    document.getElementById('summaryOutput').innerHTML = 'Complete the assessment to generate an intervention summary.';
+
+    updateProgress();
+  }
+
+  function createReportItem(label, value) {
+    return `
+      <div class="report-item">
+        <div class="report-label">${label}</div>
+        <div>${value || 'N/A'}</div>
+      </div>
+    `;
+  }
+
+  function generatePrintReport() {
+    generateSummary();
+
+    document.getElementById('printCycle').innerText = document.getElementById('reportCycle').value;
+
+    document.getElementById('reportStudentInfo').innerHTML = `
+      ${createReportItem('Student Name', currentStudent)}
+      ${createReportItem('Grade Transition', document.getElementById('gradeLevel').value)}
+      ${createReportItem('Reporting Cycle', document.getElementById('reportCycle').value)}
+      ${createReportItem('Assessment Date', document.getElementById('assessmentDate').value)}
+      ${createReportItem('MAP Reading', document.getElementById('mapReading').value)}
+      ${createReportItem('MAP Language Usage', document.getElementById('mapLanguage').value)}
+      ${createReportItem('CEFR Level', document.getElementById('cefrLevel').value)}
+      ${createReportItem('Instructional Reading Level', document.getElementById('readingLevel').value)}
+      ${createReportItem('Reading Fluency', document.getElementById('fluency').value + ' WPM')}
+      ${createReportItem('MAZE Comprehension', document.getElementById('mazeScore').value)}
+    `;
+
+    document.getElementById('reportReading').innerHTML = `
+      ${createReportItem('Vocabulary Support', document.getElementById('vocabSupport').value)}
+      ${createReportItem('Main Idea Skills', (document.querySelector('[data-group="mainIdea"]')?.getAttribute('data-value')) || 'N/A')}
+      ${createReportItem('Inference Skills', (document.querySelector('[data-group="inference"]')?.getAttribute('data-value')) || 'N/A')}
+      ${createReportItem('Reading Notes', document.getElementById('readingNotes').value)}
+    `;
+
+    document.getElementById('reportWriting').innerHTML = `
+      ${createReportItem('Sentence Construction', document.getElementById('sentenceLevel').value)}
+      ${createReportItem('Paragraph Organization', document.getElementById('paragraphLevel').value)}
+      ${createReportItem('Independence Level', document.getElementById('independence').value)}
+      ${createReportItem('Writing Scaffold Support', document.getElementById('writingScaffold').value)}
+      ${createReportItem('Writing Notes', document.getElementById('writingNotes').value)}
+    `;
+
+    document.getElementById('reportLanguage').innerHTML = `
+      ${createReportItem('Following Directions', document.getElementById('directions').value)}
+      ${createReportItem('Chunked Instruction Response', document.getElementById('chunkedInstruction').value)}
+      ${createReportItem('Non-Chunked Response', document.getElementById('nonChunkedInstruction').value)}
+      ${createReportItem('Processing Notes', document.getElementById('processingNotes').value)}
+    `;
+
+    document.getElementById('reportSummary').innerHTML = document.getElementById('summaryOutput').innerHTML;
+
+    setTimeout(() => {
+      window.print();
+    }, 300);
+  }
+
+  updateProgress();
 </script>
+
 </body>
 </html>
