@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow, noarchive" />
-  <title>Literacy Intervention Assessment Tool</title>
+  <title>Literacy Support and Evaluation Tool</title>
   <style>
     * {
       margin: 0;
@@ -169,7 +169,7 @@
       font-size: 14.5px;
     }
 
-    /* Cool Styled Bottom AI Badge Indicator */
+    /* Styled Bottom Automated Text Indicator */
     .ai-powered-badge {
       display: inline-flex;
       align-items: center;
@@ -412,8 +412,8 @@
     <div class="print-header">
       <h1>Student Literacy Support Report</h1>
       <p id="printCycle" style="font-weight:600; margin-top:5px; font-size:14px; color:#1f3b5b;"></p>
-      <p style="font-size:12px; margin-top:3px; color:#4a5568;">Comprehensive Literacy Progress & Intervention Record</p>
-      <p style="font-size:10px; margin-top:4px; color:#718096;">Intervention Management Core Platform • System Build 24.3</p>
+      <p style="font-size:12px; margin-top:3px; color:#4a5568;">Student Progress & Support Record</p>
+      <p style="font-size:10px; margin-top:4px; color:#718096;">Learning Support Platform • System Build 24.3</p>
     </div>
 
     <div id="printDynamicOutput"></div>
@@ -430,11 +430,11 @@
     </div>
   </div>
 
-  <h1>Literacy Intervention System</h1>
+  <h1>Student Support and Evaluation System</h1>
   <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
-    <p style="color: #475569;">Comprehensive literacy intervention, comprehension tracking, and academic support platform for middle school transition planning and ongoing intervention support.</p>
+    <p style="color: #475569;">Track reading growth, check comprehension levels, and plan classroom support for students transitioning between grade levels.</p>
     <div style="background:#1f3b5b; color:white; padding:8px 14px; border-radius:20px; font-size:13px; font-weight:bold; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
-      LIS Build 24.3 | Academic Year 2025-2026
+      Build 24.3 | Academic Year 2025-2026
     </div>
   </div>
 
@@ -461,7 +461,7 @@
   </div>
 
   <div class="card">
-    <h2>Student Information & Transition Tracking</h2>
+    <h2>Student Details & Class Transition Progress</h2>
 
     <div class="grid">
       <div class="form-group">
@@ -525,7 +525,7 @@
       </div>
 
       <div class="form-group">
-        <label>Assessment / Progress Monitoring Date</label>
+        <label>Assessment / Observation Date</label>
         <input type="date" id="assessmentDate">
       </div>
     </div>
@@ -534,7 +534,7 @@
   <div class="grid">
 
     <div class="card">
-      <h2>Reading & MAZE Comprehension Assessment</h2>
+      <h2>Reading & Text Comprehension Check</h2>
 
       <div class="form-group">
         <label>Instructional Reading Level</label>
@@ -557,14 +557,14 @@
         <input type="number" id="mazeScore" placeholder="Enter MAZE score">
       </div>
 
-      <label>Main Idea Identification</label>
+      <label>Finding the Main Idea</label>
       <div class="rating" data-group="mainIdea">
         <button onclick="setRating(this, 'Limited')">Limited</button>
         <button onclick="setRating(this, 'Developing')">Developing</button>
         <button onclick="setRating(this, 'Proficient')">Proficient</button>
       </div>
 
-      <label>Inference Skills</label>
+      <label>Reading Between the Lines (Inference)</label>
       <div class="rating" data-group="inference">
         <button onclick="setRating(this, 'Limited')">Limited</button>
         <button onclick="setRating(this, 'Developing')">Developing</button>
@@ -587,10 +587,10 @@
     </div>
 
     <div class="card">
-      <h2>Writing Assessment</h2>
+      <h2>Writing Check</h2>
 
       <div class="form-group">
-        <label>Sentence Construction</label>
+        <label>Sentence Structure</label>
         <select id="sentenceLevel">
           <option>Incomplete Sentences</option>
           <option>Simple Complete Sentences</option>
@@ -609,7 +609,7 @@
         </select>
       </div>
 
-      <label>Prompt Response Ability</label>
+      <label>Ability to Answer Writing Prompts</label>
       <div class="rating" data-group="promptResponse">
         <button onclick="setRating(this, 'Limited')">Limited</button>
         <button onclick="setRating(this, 'Developing')">Developing</button>
@@ -627,7 +627,7 @@
       </div>
 
       <div class="form-group">
-        <label>Scaffold Dependence During Writing</label>
+        <label>Need for Writing Frameworks/Scaffolds</label>
         <select id="writingScaffold">
           <option>Requires Full Scaffold</option>
           <option>Benefits from Guided Support</option>
@@ -637,16 +637,16 @@
       </div>
 
       <div class="form-group">
-        <label>Writing Sample Notes</label>
+        <label>Writing Notes</label>
         <textarea id="writingNotes" placeholder="Enter details..."></textarea>
       </div>
     </div>
 
     <div class="card">
-      <h2>Language Processing</h2>
+      <h2>Classroom Instructions & Information Processing</h2>
 
       <div class="form-group">
-        <label>Task Processing & Multi-Step Instruction</label>
+        <label>Following Long/Multi-Step Instructions</label>
         <select id="directions">
           <option>Unable Without Full Support</option>
           <option>Benefits from Guided Instruction</option>
@@ -656,7 +656,7 @@
       </div>
 
       <div class="form-group">
-        <label>Response to Guided Instruction</label>
+        <label>Working with Step-by-Step (Chunked) Help</label>
         <select id="chunkedInstruction">
           <option>Strong Response to Guided Support</option>
           <option>Moderate Response to Guided Support</option>
@@ -665,7 +665,7 @@
       </div>
 
       <div class="form-group">
-        <label>Independent Task Processing</label>
+        <label>Working Completely on Their Own</label>
         <select id="nonChunkedInstruction">
           <option>Difficulty Sustaining Independent Performance</option>
           <option>Developing Independent Processing</option>
@@ -674,8 +674,8 @@
       </div>
 
       <div class="form-group">
-        <label>Observed Behaviors / Notes</label>
-        <textarea id="processingNotes" placeholder="Enter processing habits..."></textarea>
+        <label>Observed Learning Behaviors / Notes</label>
+        <textarea id="processingNotes" placeholder="Enter habits..."></textarea>
       </div>
     </div>
   </div>
@@ -686,20 +686,20 @@
       <thead>
         <tr>
           <th>Task</th>
-          <th>Independent Performance</th>
-          <th>Guided Support Performance</th>
-          <th>Observed Accessibility Changes</th>
+          <th>Working Alone</th>
+          <th>Working With Teacher Support</th>
+          <th>What Changes Were Noticed?</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><input type="text" id="table_task_1" placeholder="Example: Reading comprehension" value="Reading comprehension"></td>
+          <td><input type="text" id="table_task_1" value="Reading comprehension"></td>
           <td><textarea id="table_ind_1" placeholder="Student performance independently"></textarea></td>
           <td><textarea id="table_guid_1" placeholder="Performance with scaffolds/support"></textarea></td>
           <td><textarea id="table_obs_1" placeholder="Observed differences"></textarea></td>
         </tr>
         <tr>
-          <td><input type="text" id="table_task_2" placeholder="Example: Writing response" value="Writing response"></td>
+          <td><input type="text" id="table_task_2" value="Writing response"></td>
           <td><textarea id="table_ind_2"></textarea></td>
           <td><textarea id="table_guid_2"></textarea></td>
           <td><textarea id="table_obs_2"></textarea></td>
@@ -709,154 +709,154 @@
   </div>
 
   <div class="card">
-    <h2>Instructional Materials & Intervention Resources</h2>
+    <h2>Learning Materials & Classroom Resources</h2>
     <div class="materials-grid">
       <div class="material-card">
         <h3>Ventures Second Edition</h3>
         <ul>
-          <li>Core literacy curriculum</li>
-          <li>Grammar and vocabulary development</li>
-          <li>Systematic language progression</li>
-          <li>CEFR-aligned instruction</li>
+          <li>Core lesson books</li>
+          <li>Grammar and vocabulary building</li>
+          <li>Structured language practice</li>
+          <li>Level-based training</li>
         </ul>
       </div>
 
       <div class="material-card">
         <h3>MAZE Comprehension</h3>
         <ul>
-          <li>Reading comprehension monitoring</li>
-          <li>Inference and accuracy tracking</li>
-          <li>Progress benchmarking</li>
-          <li>Intervention response analysis</li>
+          <li>Reading checks and progress tracking</li>
+          <li>Understanding and accuracy checks</li>
+          <li>Regular student testing</li>
+          <li>Support response checks</li>
         </ul>
       </div>
 
       <div class="material-card">
-        <h3>Cambridge / CEFR Assessment</h3>
+        <h3>Cambridge / CEFR Levels</h3>
         <ul>
-          <li>A1-C1 proficiency tracking</li>
-          <li>Language acquisition monitoring</li>
-          <li>Academic readiness evaluation</li>
-          <li>Progress comparison over time</li>
+          <li>Language level tracking (A1-C1)</li>
+          <li>General language progress checks</li>
+          <li>Classroom readiness evaluation</li>
+          <li>Growth tracking over time</li>
         </ul>
       </div>
 
       <div class="material-card">
         <h3>MAP Growth Data</h3>
         <ul>
-          <li>Reading benchmark data</li>
-          <li>Language usage growth trends</li>
-          <li>Longitudinal academic tracking</li>
-          <li>Instructional planning support</li>
+          <li>Reading test scores</li>
+          <li>Language usage growth patterns</li>
+          <li>Long-term test tracking</li>
+          <li>Lesson planning adjustments</li>
         </ul>
       </div>
     </div>
 
-    <h2 style="margin-top:25px;">Program Resources & Assessment Framework</h2>
+    <h2 style="margin-top:25px;">Resource Breakdown & Assessment Guide</h2>
     <table>
       <thead>
         <tr>
-          <th>Resource / Assessment</th>
+          <th>Resource / Test</th>
           <th>Purpose</th>
-          <th>Current Usage</th>
+          <th>How It Is Used</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Ventures Second Edition - Level 3</td>
-          <td>Core literacy instruction and language systems development</td>
-          <td>Primary intervention curriculum</td>
+          <td>Core reading lessons and language systems practice</td>
+          <td>Primary classroom curriculum</td>
         </tr>
         <tr>
           <td>MAZE Comprehension</td>
-          <td>Reading comprehension progress monitoring</td>
-          <td>Used for comprehension tracking and data collection</td>
+          <td>Reading progress tracking and checks</td>
+          <td>Used for comprehension checks and data tracking</td>
         </tr>
         <tr>
           <td>Cambridge English Assessment / CEFR Tracking</td>
-          <td>Track language acquisition and proficiency progression</td>
-          <td>Used for CEFR-aligned intervention monitoring</td>
+          <td>Track language acquisition and skill level steps</td>
+          <td>Used for level-based support updates</td>
         </tr>
         <tr>
           <td>MAP Assessment Data</td>
-          <td>Benchmark growth and achievement trends</td>
-          <td>Supporting assessment data point</td>
+          <td>Benchmark growth and score tracking patterns</td>
+          <td>Supporting extra test data point</td>
         </tr>
         <tr>
-          <td>CEFR-Based Proficiency Tracking</td>
-          <td>Language proficiency progression</td>
-          <td>Long-term literacy monitoring</td>
+          <td>CEFR-Based Skill Level Tracking</td>
+          <td>General language progress steps</td>
+          <td>Long-term reading support logs</td>
         </tr>
       </tbody>
     </table>
   </div>
 
   <div class="card">
-    <h2>Assessment Materials & Skill-Based Testing Resources</h2>
+    <h2>Evaluation Material & Skill-Based Practice Areas</h2>
     <div class="materials-grid">
       <div class="material-card">
-        <h3>Reading Fluency Assessment</h3>
+        <h3>Reading Fluency Checks</h3>
         <ul>
-          <li>1-minute oral reading passages</li>
-          <li>Grade-leveled nonfiction texts</li>
-          <li>WPM tracking sheets</li>
-          <li>Error and decoding analysis</li>
-          <li>Repeated reading comparison</li>
+          <li>1-minute aloud reading tools</li>
+          <li>Grade-level informative passages</li>
+          <li>WPM tracking logs</li>
+          <li>Pronunciation and decoding checks</li>
+          <li>Repeated reading growth checks</li>
         </ul>
       </div>
 
       <div class="material-card">
-        <h3>Comprehension Testing</h3>
+        <h3>Comprehension Practice</h3>
         <ul>
-          <li>MAZE comprehension passages</li>
-          <li>Main idea questions</li>
-          <li>Inference-based questions</li>
-          <li>Vocabulary in context tasks</li>
-          <li>Short-response comprehension prompts</li>
+          <li>MAZE reading fill-in tasks</li>
+          <li>Main idea exercises</li>
+          <li>Reading between the lines tasks</li>
+          <li>Context vocabulary cards</li>
+          <li>Short answer writing tasks</li>
         </ul>
       </div>
 
       <div class="material-card">
-        <h3>Writing Assessment Tasks</h3>
+        <h3>Writing Prompts</h3>
         <ul>
-          <li>Sentence expansion activities</li>
-          <li>Paragraph organization prompts</li>
-          <li>Short constructed responses</li>
-          <li>Opinion and narrative prompts</li>
-          <li>Independent vs scaffolded writing samples</li>
+          <li>Sentence building exercises</li>
+          <li>Paragraph layout prompts</li>
+          <li>Short essay responses</li>
+          <li>Opinion and storytelling topics</li>
+          <li>Alone vs framework writing comparison</li>
         </ul>
       </div>
 
       <div class="material-card">
-        <h3>Vocabulary & Language Skills</h3>
+        <h3>Vocabulary & Language Rules</h3>
         <ul>
-          <li>Academic vocabulary matching</li>
-          <li>Context clue exercises</li>
-          <li>Grammar correction tasks</li>
-          <li>Sentence completion activities</li>
-          <li>Tier 2 vocabulary checks</li>
+          <li>Classroom word matching sheets</li>
+          <li>Context clue sentence builders</li>
+          <li>Grammar fix activities</li>
+          <li>Sentence completing practice</li>
+          <li>Everyday vocabulary checks</li>
         </ul>
       </div>
 
       <div class="material-card">
-        <h3>Language Processing Evaluation</h3>
+        <h3>Information Processing Checks</h3>
         <ul>
-          <li>Multi-step direction tasks</li>
-          <li>Chunked instruction comparison</li>
-          <li>Listening comprehension checks</li>
-          <li>Instruction recall tasks</li>
-          <li>Sequencing activities</li>
+          <li>Multi-step task logs</li>
+          <li>Chunked vs long instruction checks</li>
+          <li>Listening and following checks</li>
+          <li>Instruction recall exercises</li>
+          <li>Task sorting activities</li>
         </ul>
       </div>
 
       <div class="material-card">
-        <h3>Cambridge / CEFR Progression</h3>
+        <h3>Cambridge Standard Progress</h3>
         <ul>
-          <li>A1-A2 reading tasks</li>
-          <li>B1 comprehension passages</li>
-          <li>Cambridge-style writing prompts</li>
-          <li>Speaking rubric tracking</li>
-          <li>CEFR-aligned benchmark checks</li>
+          <li>A1-A2 basic reading tasks</li>
+          <li>B1 intermediate passages</li>
+          <li>Cambridge-style short writing</li>
+          <li>Speaking feedback tables</li>
+          <li>Level-based standard checks</li>
         </ul>
       </div>
     </div>
@@ -864,52 +864,52 @@
     <table style="margin-top:25px;">
       <thead>
         <tr>
-          <th>Skill Area</th>
-          <th>Suggested Material</th>
-          <th>Assessment Method</th>
+          <th>Skill Focus</th>
+          <th>Recommended Material</th>
+          <th>Check Method</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Reading Fluency</td>
-          <td>Grade-leveled passages</td>
+          <td>Grade-level reading blocks</td>
           <td>1-minute oral reading</td>
         </tr>
         <tr>
           <td>Reading Comprehension</td>
-          <td>MAZE passages</td>
-          <td>Timed comprehension tasks</td>
+          <td>MAZE reading sheets</td>
+          <td>Timed comprehension sheets</td>
         </tr>
         <tr>
-          <td>Writing</td>
-          <td>Constructed response prompts</td>
-          <td>Independent + scaffolded comparison</td>
+          <td>Writing Focus</td>
+          <td>Short answer prompts</td>
+          <td>Independent vs scaffolded check</td>
         </tr>
         <tr>
           <td>Vocabulary</td>
-          <td>Ventures vocabulary sets</td>
-          <td>Context/application activities</td>
+          <td>Ventures word work lists</td>
+          <td>Application sentence tasks</td>
         </tr>
         <tr>
-          <td>Language Processing</td>
-          <td>Teacher-created direction tasks</td>
-          <td>Observation + completion tracking</td>
+          <td>Information Processing</td>
+          <td>Teacher-made rule tasks</td>
+          <td>Observation + task completion metrics</td>
         </tr>
         <tr>
-          <td>CEFR / Cambridge</td>
-          <td>Cambridge-aligned assessments</td>
-          <td>Benchmark proficiency checks</td>
+          <td>Standardized Levels</td>
+          <td>Cambridge level checks</td>
+          <td>Proficiency benchmark log</td>
         </tr>
       </tbody>
     </table>
   </div>
 
   <div class="card">
-    <h2>Assessment Progress Tracker</h2>
-    <p style="color: #475569; font-size: 14px; margin-bottom: 10px;">Tracks filled parameters and completed metrics across the evaluation matrix.</p>
+    <h2>Evaluation Completion Tracker</h2>
+    <p style="color: #475569; font-size: 14px; margin-bottom: 10px;">Tracks filled spaces and checked boxes across the evaluation sections.</p>
     
     <div class="score-box">
-      <h3>Assessment Completion</h3>
+      <h3>Form Progress</h3>
       <div class="progress">
         <div class="progress-fill" id="progressFill"></div>
       </div>
@@ -918,15 +918,15 @@
   </div>
 
   <div class="card">
-    <h2>Support Profile</h2>
+    <h2>Student Summary Profile</h2>
 
     <div class="summary" id="summaryOutput">
-      Complete the assessment to generate an intervention summary.
+      Complete the forms above to generate an automated review summary.
     </div>
 
     <div>
       <div class="ai-powered-badge">
-        <span class="ai-sparkle">✨</span> AI Powered Feature
+        <span class="ai-sparkle">✨</span> Automated Review Assist Feature
       </div>
     </div>
 
@@ -1186,7 +1186,7 @@
     });
 
     document.getElementById('studentName').value = currentStudent;
-    document.getElementById('summaryOutput').innerHTML = 'Complete the assessment to generate an intervention summary.';
+    document.getElementById('summaryOutput').innerHTML = 'Complete the forms above to generate an automated review summary.';
     updateProgress();
   }
 
@@ -1203,19 +1203,18 @@
       });
       document.querySelectorAll('.rating button').forEach(btn => btn.classList.remove('selected'));
       document.querySelectorAll('.rating').forEach(g => g.removeAttribute('data-value'));
-      document.getElementById('summaryOutput').innerHTML = 'Complete the assessment to generate an intervention summary.';
+      document.getElementById('summaryOutput').innerHTML = 'Complete the forms above to generate an automated review summary.';
       updateProgress();
     }
   }
 
-  // ENTIRELY REBUILT HIGH-FIDELITY PRINT MASTER BUILDER
+  // HIGH-FIDELITY PRINT MASTER BUILDER WITH COMPLICATED JARGON REMOVED
   function generatePrintReport() {
     studentProfiles[currentStudent] = gatherFormData();
     generateSummary();
 
     document.getElementById('printCycle').innerText = document.getElementById('reportCycle').value;
 
-    // Capture every form selector and value live from the DOM
     const data = {
       name: currentStudent,
       reviewedBy: document.getElementById('reviewedBy').value,
@@ -1252,10 +1251,9 @@
       obs2: document.getElementById('table_obs_2').value
     };
 
-    // Construct the complete print blueprint layout cleanly structured for paper pages
     let htmlBlueprint = `
       <div class="print-section">
-        <div class="print-section-title">1. Student Information & Transition Tracking</div>
+        <div class="print-section-title">1. Student Overview & Tracker Details</div>
         <table class="print-table">
           <tr>
             <td style="width:25%;"><strong>Student Name:</strong></td><td style="width:25%; font-weight:bold;">${data.name}</td>
@@ -1277,7 +1275,7 @@
       </div>
 
       <div class="print-section">
-        <div class="print-section-title">2. Reading & MAZE Comprehension Assessment</div>
+        <div class="print-section-title">2. Reading & Text Comprehension Check</div>
         <table class="print-table">
           <tr>
             <td style="width:25%;"><strong>Instructional Reading Level:</strong></td><td style="width:25%; font-weight:bold;">${data.readingLevel}</td>
@@ -1288,8 +1286,8 @@
             <td><strong>MAZE Comprehension Score:</strong></td><td>${data.mazeScore || 'N/A'}</td>
           </tr>
           <tr>
-            <td><strong>Main Idea Identification:</strong></td><td><strong>${data.mainIdea}</strong></td>
-            <td><strong>Inference Skills:</strong></td><td><strong>${data.inference}</strong></td>
+            <td><strong>Finding Main Idea:</strong></td><td><strong>${data.mainIdea}</strong></td>
+            <td><strong>Reading Between Lines:</strong></td><td><strong>${data.inference}</strong></td>
           </tr>
         </table>
         <div style="font-size:11px; font-weight:bold; color:#1f3b5b; margin-top:6px;">Reading Observations & Notes:</div>
@@ -1297,18 +1295,18 @@
       </div>
 
       <div class="print-section">
-        <div class="print-section-title">3. Writing Assessment</div>
+        <div class="print-section-title">3. Writing Check</div>
         <table class="print-table">
           <tr>
-            <td style="width:25%;"><strong>Sentence Construction:</strong></td><td style="width:25%;">${data.sentenceLevel}</td>
+            <td style="width:25%;"><strong>Sentence Structure:</strong></td><td style="width:25%;">${data.sentenceLevel}</td>
             <td style="width:25%;"><strong>Paragraph Organization:</strong></td><td style="width:25%;">${data.paragraphLevel}</td>
           </tr>
           <tr>
-            <td><strong>Prompt Response Ability:</strong></td><td><strong>${data.promptResponse}</strong></td>
+            <td><strong>Answering Prompts:</strong></td><td><strong>${data.promptResponse}</strong></td>
             <td><strong>Independence Level:</strong></td><td>${data.independence}</td>
           </tr>
           <tr>
-            <td><strong>Scaffold Dependence:</strong></td><td colspan="3">${data.writingScaffold}</td>
+            <td><strong>Need for Writing Frameworks:</strong></td><td colspan="3">${data.writingScaffold}</td>
           </tr>
         </table>
         <div style="font-size:11px; font-weight:bold; color:#1f3b5b; margin-top:6px;">Writing Performance Notes:</div>
@@ -1316,31 +1314,31 @@
       </div>
 
       <div class="print-section">
-        <div class="print-section-title">4. Language Processing Profile</div>
+        <div class="print-section-title">4. Classroom Instructions & Processing Notes</div>
         <table class="print-table">
           <tr>
-            <td style="width:35%;"><strong>Task & Multi-Step Instructions:</strong></td><td>${data.directions}</td>
+            <td style="width:35%;"><strong>Following Multi-Step Rules:</strong></td><td>${data.directions}</td>
           </tr>
           <tr>
-            <td><strong>Response to Guided Support:</strong></td><td>${data.chunkedInstruction}</td>
+            <td><strong>Working with Step-by-Step Help:</strong></td><td>${data.chunkedInstruction}</td>
           </tr>
           <tr>
-            <td><strong>Independent Academic Processing:</strong></td><td>${data.nonChunkedInstruction}</td>
+            <td><strong>Working Completely Alone:</strong></td><td>${data.nonChunkedInstruction}</td>
           </tr>
         </table>
-        <div style="font-size:11px; font-weight:bold; color:#1f3b5b; margin-top:6px;">Observed Processing Behaviors & Notes:</div>
-        <div class="print-notes-box">${data.processingNotes || 'No processing notes provided.'}</div>
+        <div style="font-size:11px; font-weight:bold; color:#1f3b5b; margin-top:6px;">Observed Learning Behaviors & Notes:</div>
+        <div class="print-notes-box">${data.processingNotes || 'No notes provided.'}</div>
       </div>
 
       <div class="print-section" style="page-break-inside: avoid;">
-        <div class="print-section-title">5. Support Comparison Profile Matrix</div>
+        <div class="print-section-title">5. Support Comparison Table</div>
         <table class="print-table">
           <thead>
             <tr>
-              <th style="width:18%;">Task Domain</th>
-              <th style="width:27%;">Independent Performance</th>
-              <th style="width:27%;">Guided Support Performance</th>
-              <th style="width:28%;">Observed Accessibility Changes</th>
+              <th style="width:18%;">Task Focus</th>
+              <th style="width:27%;">Working Alone</th>
+              <th style="width:27%;">Working With Teacher Support</th>
+              <th style="width:28%;">What Changes Were Noticed?</th>
             </tr>
           </thead>
           <tbody>
@@ -1361,7 +1359,7 @@
       </div>
 
       <div class="print-section" style="page-break-inside: avoid;">
-        <div class="print-section-title">6. Core Synthesis Profile Summary</div>
+        <div class="print-section-title">6. Final Summary Report</div>
         <div style="border: 1px dashed #1f3b5b; padding: 12px; background: #fff; border-radius: 8px; font-size:11.5px; line-height:1.5;">
           ${document.getElementById('summaryOutput').innerHTML}
         </div>
@@ -1370,7 +1368,6 @@
 
     document.getElementById('printDynamicOutput').innerHTML = htmlBlueprint;
 
-    // Trigger printing
     setTimeout(() => {
       window.print();
     }, 250);
