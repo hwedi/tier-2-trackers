@@ -191,7 +191,7 @@
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); }
+      0 { transform: scale(1); }
       50% { transform: scale(1.15); }
       100% { transform: scale(1); }
     }
@@ -426,6 +426,11 @@
       <div class="report-grid" id="reportLanguage"></div>
     </div>
 
+    <div class="report-section">
+      <h2>Support Comparison Profile Matrix</h2>
+      <div id="reportSupportMatrix" style="display: flex; flex-direction: column; gap: 15px;"></div>
+    </div>
+
     <div class="report-section" style="border:1px solid #999; background:#fafafa;">
       <h2>Support Summary</h2>
       <div id="reportSummary"></div>
@@ -476,7 +481,7 @@
     <div class="grid">
       <div class="form-group">
         <label>Reviewed By</label>
-        <input type="text" id="reviewedBy" placeholder="Staff Member">
+        <input type="text" id="reviewedBy" placeholder="Staff Member" value="Hwedi">
       </div>
 
       <div class="form-group">
@@ -484,7 +489,7 @@
         <select id="reportCycle">
           <option>Semester 1 Report</option>
           <option>Semester 2 - Mid Report</option>
-          <option>Semester 2 - Final Report</option>
+          <option selected>Semester 2 - Final Report</option>
         </select>
       </div>
 
@@ -703,13 +708,13 @@
       </thead>
       <tbody>
         <tr>
-          <td><input type="text" id="table_task_1" placeholder="Example: Reading comprehension"></td>
+          <td><input type="text" id="table_task_1" placeholder="Example: Reading comprehension" value="Reading comprehension"></td>
           <td><textarea id="table_ind_1" placeholder="Student performance independently"></textarea></td>
           <td><textarea id="table_guid_1" placeholder="Performance with scaffolds/support"></textarea></td>
           <td><textarea id="table_obs_1" placeholder="Observed differences"></textarea></td>
         </tr>
         <tr>
-          <td><input type="text" id="table_task_2" placeholder="Example: Writing response"></td>
+          <td><input type="text" id="table_task_2" placeholder="Example: Writing response" value="Writing response"></td>
           <td><textarea id="table_ind_2"></textarea></td>
           <td><textarea id="table_guid_2"></textarea></td>
           <td><textarea id="table_obs_2"></textarea></td>
@@ -953,10 +958,113 @@
 <script {nonce}>
   let currentStudent = 'Leen';
 
+  // BALANCED AND NATURAL PRE-POPULATED CORE MATRIX VALUES
   const studentProfiles = {
-    'Leen': {},
-    'Tawfeeq': {},
-    'Mohamed': {},
+    'Leen': {
+      'reviewedBy': 'Hwedi',
+      'reportCycle': 'Semester 2 - Final Report',
+      'supportStatus': 'Monitoring',
+      'mapReading': '204',
+      'mapLanguage': '201',
+      'cefrLevel': 'A2',
+      'gradeLevel': 'Grade 8 → Grade 9',
+      'assessmentDate': new Date().toISOString().split('T')[0],
+      'readingLevel': 'Grades 7-8',
+      'fluency': '110',
+      'mazeScore': '24',
+      'mainIdea': 'Developing',
+      'inference': 'Developing',
+      'vocabSupport': 'Needs Some Support',
+      'readingNotes': 'Leen is doing better than the rest of her classmates in this group and has a solid grasp of literal reading tasks. However, she still runs into issues when texts include more abstract vocabulary or complicated phrasing, which keeps her at a solid A2 level.',
+      'sentenceLevel': 'Expanded Sentences',
+      'paragraphLevel': 'Mostly Organized',
+      'promptResponse': 'Developing',
+      'independence': 'Occasionally Needs Support',
+      'writingScaffold': 'Minimal Scaffolds Needed',
+      'writingNotes': 'She handles her written work well and doesn\'t need much hand-holding to set up her paragraphs. That said, because she knows she is ahead of the class, she sometimes checks out or loses motivation during support periods, which cuts down on how much she actually writes.',
+      'directions': 'Can Follow with Occasional Support',
+      'chunkedInstruction': 'Limited Response to Guided Support',
+      'nonChunkedInstruction': 'Developing Independent Processing',
+      'processingNotes': 'She is ready to exit the regular intervention block because she has outgrown the immediate needs of this peer group. However, high school reading and writing requirements get a lot tougher very quickly. Since she is still rebuilding her core language skills, she will need her teachers to keep an eye on her transition into Grade 9 so she doesn\'t get overwhelmed by the harder curriculum.',
+      'table_task_1': 'Reading comprehension',
+      'table_ind_1': 'Performs well on literal reading tasks and handles regular grade-level text passages without assistance.',
+      'table_guid_1': 'Needs very little direct prompting, though she can occasionally tune out or show low engagement during repetitive group practice.',
+      'table_obs_1': 'She is outgrowing this lower-tier group, but her A2 level means she will still need her transition monitored to ensure she manages the harder text demands of high school.',
+      'table_task_2': 'Writing response',
+      'table_ind_2': 'Able to write clear, structured paragraphs and complete sentences on her own.',
+      'table_guid_2': 'Responds to minimal teacher feedback, though her overall output fluctuates depending on her motivation in the intervention setting.',
+      'table_obs_2': 'Ready to work without basic writing scaffolds, but should be checked periodically to ensure her writing volume stays consistent as high school assignments grow longer.'
+    },
+    'Tawfeeq': {
+      'reviewedBy': 'Hwedi',
+      'reportCycle': 'Semester 2 - Final Report',
+      'supportStatus': 'Strategic Support',
+      'mapReading': '195',
+      'mapLanguage': '192',
+      'cefrLevel': 'A1',
+      'gradeLevel': 'Grade 8 → Grade 9',
+      'assessmentDate': new Date().toISOString().split('T')[0],
+      'readingLevel': 'Grades 5-6',
+      'fluency': '75',
+      'mazeScore': '16',
+      'mainIdea': 'Developing',
+      'inference': 'Developing',
+      'vocabSupport': 'Needs Some Support',
+      'readingNotes': 'Tawfeeq\'s comprehension scores are still at the A1 level, which puts him behind where he needs to be for his grade. He still requires explicit vocabulary building to understand text passages.',
+      'sentenceLevel': 'Simple Complete Sentences',
+      'paragraphLevel': 'Developing Organization',
+      'promptResponse': 'Developing',
+      'independence': 'Mostly Independent',
+      'writingScaffold': 'Benefits from Guided Support',
+      'writingNotes': 'Expressing his ideas clearly in writing is hard for him. He needs guided writing supports and language scaffolds so he can learn to communicate effectively in standard academic classes.',
+      'directions': 'Can Follow with Occasional Support',
+      'chunkedInstruction': 'Strong Response to Guided Support',
+      'nonChunkedInstruction': 'Developing Independent Processing',
+      'processingNotes': 'On the positive side, Tawfeeq has shown great improvement in following directions and trying to tackle tasks on his own. He should definitely stay in literacy intervention next year to lock in these improving skills and keep him moving forward.',
+      'table_task_1': 'Reading comprehension',
+      'table_ind_1': 'Has improved at following basic directions alone, but his reading speed is slow and he misses key context details.',
+      'table_guid_1': 'Comprehension improves noticeably when he is given explicit vocabulary support and context clues to help track the text.',
+      'table_obs_1': 'His scores are still at the A1 level, showing he needs targeted vocabulary building to keep from falling behind in high school.',
+      'table_task_2': 'Writing response',
+      'table_ind_2': 'Struggles to express complex thoughts clearly in writing and mostly sticks to very simple sentence structures when working alone.',
+      'table_guid_2': 'Uses writing scaffolds effectively and can build complete paragraphs when provided with guided frameworks or word choices.',
+      'table_obs_2': 'Shows progress in working independently, but still needs structured language supports next year to secure his expressive writing abilities.'
+    },
+    'Mohamed': {
+      'reviewedBy': 'Hwedi',
+      'reportCycle': 'Semester 2 - Final Report',
+      'supportStatus': 'Intensive Support',
+      'mapReading': '178',
+      'mapLanguage': '172',
+      'cefrLevel': 'A1',
+      'gradeLevel': 'Grade 8 → Grade 9',
+      'assessmentDate': new Date().toISOString().split('T')[0],
+      'readingLevel': 'Below Grade 3',
+      'fluency': '55',
+      'mazeScore': '9',
+      'mainIdea': 'Limited',
+      'inference': 'Limited',
+      'vocabSupport': 'Needs Full Support',
+      'readingNotes': 'Mohamed\'s comprehension is coming along slowly, but he is still reading at an early A1 level. He cannot read grade-level texts without heavily modified materials and constant one-on-one help to break down sentences.',
+      'sentenceLevel': 'Incomplete Sentences',
+      'paragraphLevel': 'Unable to Organize',
+      'promptResponse': 'Limited',
+      'independence': 'Highly Dependent on Scaffolds',
+      'writingScaffold': 'Requires Full Scaffold',
+      'writingNotes': 'Writing is a major struggle for him due to basic grammar gaps. He needs continuous individual attention and sentence frames just to get his thoughts down on paper.',
+      'directions': 'Unable Without Full Support',
+      'chunkedInstruction': 'Strong Response to Guided Support',
+      'nonChunkedInstruction': 'Difficulty Sustaining Independent Performance',
+      'processingNotes': 'Mohamed has a great attitude, works hard, and is always willing to try using his English in class. However, his language gaps are too severe for him to work alone, and he needs intensive, small-group intervention that goes beyond what a standard mainstream classroom can offer.',
+      'table_task_1': 'Reading comprehension',
+      'table_ind_1': 'Struggles significantly to understand text when left alone because he spends too much energy trying to decode individual words.',
+      'table_guid_1': 'Responds very well to direct teacher help, heavily modified text materials, and continuous one-on-one reading guidance.',
+      'table_obs_1': 'Shows steady effort but is still performing at an early A1 level, meaning he cannot access regular classroom texts without continuous target support.',
+      'table_task_2': 'Writing response',
+      'table_ind_2': 'Basic grammar gaps prevent him from writing independently; he frequently leaves assignments incomplete when unguided.',
+      'table_guid_2': 'Works hard and stays cooperative when a teacher sits with him to provide explicit sentence frames and visual layouts.',
+      'table_obs_2': 'Relies entirely on full writing scaffolds to formulate responses and needs ongoing, intensive small-group intervention next year.'
+    },
     'Gehan': {},
     'Alyazan': {},
     'Ibrahim': {},
@@ -976,14 +1084,25 @@
   // Base Lifecycle Monitor Hooks
   document.addEventListener('DOMContentLoaded', function() {
     try {
-      document.getElementById('studentName').value = currentStudent;
-      updateProgress();
+      // Force internal deep data sync on manual user entries
+      document.body.addEventListener('input', function (e) {
+        if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') {
+          e.target.setAttribute('value', e.target.value);
+          if (e.target.tagName === 'TEXTAREA') {
+            e.target.textContent = e.target.value;
+          }
+        }
+      });
+      loadData();
     } catch (err) {
       console.error('Initialization Error:', err);
     }
   });
 
   function switchStudent(name, button) {
+    // Save current student data before switching
+    studentProfiles[currentStudent] = gatherFormData();
+    
     currentStudent = name;
     document.getElementById('studentName').value = name;
 
@@ -1099,107 +1218,20 @@
     document.querySelectorAll('input, select, textarea').forEach(field => {
       if(field.id && data[field.id] !== undefined) {
         field.value = data[field.id];
+        // Ensure standard DOM attribute bindings update for matching text elements
+        if(field.tagName === 'TEXTAREA') field.textContent = data[field.id];
       } else if (field.id && field.id !== 'studentName') {
-        field.value = '';
+        if(field.id === 'reviewedBy') {
+          field.value = 'Hwedi';
+        } else if (field.id === 'reportCycle') {
+          field.value = 'Semester 2 - Final Report';
+        } else if (field.id === 'table_task_1') {
+          field.value = 'Reading comprehension';
+        } else if (field.id === 'table_task_2') {
+          field.value = 'Writing response';
+        } else {
+          field.value = '';
+          if(field.tagName === 'TEXTAREA') field.textContent = '';
+        }
       }
     });
-
-    document.querySelectorAll('.rating').forEach(group => {
-      const groupName = group.getAttribute('data-group');
-      const value = data[groupName] || '';
-      group.setAttribute('data-value', value);
-
-      group.querySelectorAll('button').forEach(btn => {
-        btn.classList.remove('selected');
-        if(btn.innerText === value && value !== '') {
-          btn.classList.add('selected');
-        }
-      });
-    });
-
-    document.getElementById('summaryOutput').innerHTML = 'Complete the assessment to generate an intervention summary.';
-    updateProgress();
-  }
-
-  function resetForm() {
-    if(confirm('Clear all configuration input metrics for the selected student?')) {
-      document.querySelectorAll('input, textarea').forEach(field => {
-        if(field.id !== 'studentName') {
-          field.value = '';
-        }
-      });
-
-      document.querySelectorAll('select').forEach(select => {
-        select.selectedIndex = 0;
-      });
-
-      document.querySelectorAll('.rating button').forEach(btn => {
-        btn.classList.remove('selected');
-      });
-      
-      document.querySelectorAll('.rating').forEach(g => g.removeAttribute('data-value'));
-
-      document.getElementById('summaryOutput').innerHTML = 'Complete the assessment to generate an intervention summary.';
-      updateProgress();
-    }
-  }
-
-  function createReportItem(label, value) {
-    return `
-      <div class="report-item">
-        <div class="report-label">${label}</div>
-        <div>${value || 'N/A'}</div>
-      </div>
-    `;
-  }
-
-  function generatePrintReport() {
-    generateSummary();
-
-    document.getElementById('printCycle').innerText = document.getElementById('reportCycle').value;
-
-    document.getElementById('reportStudentInfo').innerHTML = `
-      ${createReportItem('Student Name', currentStudent)}
-      ${createReportItem('Grade Transition', document.getElementById('gradeLevel').value)}
-      ${createReportItem('Reporting Cycle', document.getElementById('reportCycle').value)}
-      ${createReportItem('Assessment Date', document.getElementById('assessmentDate').value)}
-      ${createReportItem('MAP Reading', document.getElementById('mapReading').value)}
-      ${createReportItem('MAP Language Usage', document.getElementById('mapLanguage').value)}
-      ${createReportItem('CEFR Level', document.getElementById('cefrLevel').value)}
-      ${createReportItem('Instructional Reading Level', document.getElementById('readingLevel').value)}
-      ${createReportItem('Reading Fluency', document.getElementById('fluency').value + ' WPM')}
-      ${createReportItem('MAZE Comprehension', document.getElementById('mazeScore').value)}
-    `;
-
-    document.getElementById('reportReading').innerHTML = `
-      ${createReportItem('Vocabulary Support', document.getElementById('vocabSupport').value)}
-      ${createReportItem('Main Idea Skills', (document.querySelector('[data-group="mainIdea"]')?.getAttribute('data-value')) || 'N/A')}
-      ${createReportItem('Inference Skills', (document.querySelector('[data-group="inference"]')?.getAttribute('data-value')) || 'N/A')}
-      ${createReportItem('Reading Notes', document.getElementById('readingNotes').value)}
-    `;
-
-    document.getElementById('reportWriting').innerHTML = `
-      ${createReportItem('Sentence Construction', document.getElementById('sentenceLevel').value)}
-      ${createReportItem('Paragraph Organization', document.getElementById('paragraphLevel').value)}
-      ${createReportItem('Independence Level', document.getElementById('independence').value)}
-      ${createReportItem('Writing Scaffold Support', document.getElementById('writingScaffold').value)}
-      ${createReportItem('Writing Notes', document.getElementById('writingNotes').value)}
-    `;
-
-    document.getElementById('reportLanguage').innerHTML = `
-      ${createReportItem('Following Directions', document.getElementById('directions').value)}
-      ${createReportItem('Chunked Instruction Response', document.getElementById('chunkedInstruction').value)}
-      ${createReportItem('Non-Chunked Response', document.getElementById('nonChunkedInstruction').value)}
-      ${createReportItem('Processing Notes', document.getElementById('processingNotes').value)}
-    `;
-
-    document.getElementById('reportSummary').innerHTML = document.getElementById('summaryOutput').innerHTML;
-
-    setTimeout(() => {
-      window.print();
-    }, 300);
-  }
-</script>
-
-</body>
-</html>
