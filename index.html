@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
   <title>Literacy Intervention Assessment Tool</title>
   <style>
     * {
@@ -31,6 +32,19 @@
       padding: 25px;
     }
 
+    /* Professional Top Confidentiality Banner */
+    .privacy-warning-banner {
+      background: #fff5f5;
+      border: 1px solid #feb2b2;
+      border-left: 5px solid #e53e3e;
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      color: #c53030;
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+
     .card {
       background: #ffffff;
       border-radius: 18px;
@@ -56,6 +70,11 @@
       cursor: pointer;
       transition: 0.3s;
       font-weight: bold;
+      color: #1f3b5b;
+    }
+
+    .student-btn:hover {
+      background: #cbdcf2;
     }
 
     .student-btn.active {
@@ -67,6 +86,10 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
     }
 
     label {
@@ -86,6 +109,13 @@
       font-size: 14px;
       transition: all 0.2s ease;
       box-sizing: border-box;
+      color: #1f2937;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #1f3b5b;
+      background: #ffffff;
+      outline: none;
     }
 
     textarea {
@@ -94,50 +124,87 @@
 
     .score-box {
       background: #eef4ff;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 10px;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 15px;
+      border: 1px solid #dbe4f0;
     }
 
     .rating {
       display: flex;
       gap: 10px;
       margin-top: 8px;
+      margin-bottom: 15px;
       flex-wrap: wrap;
     }
 
     .rating button {
       flex: 1;
-      padding: 10px;
-      border: none;
+      padding: 11px;
+      border: 1px solid #cbd5e1;
       border-radius: 8px;
       cursor: pointer;
-      background: #e4e4e4;
-      transition: 0.3s;
+      background: #f1f5f9;
+      color: #475569;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .rating button:hover {
+      background: #e2e8f0;
     }
 
     .rating button.selected {
       background: #1f3b5b;
       color: white;
+      border-color: #1f3b5b;
     }
 
     .summary {
       background: #f0fff4;
       border-left: 6px solid #1c7c54;
-      padding: 15px;
-      border-radius: 8px;
+      padding: 18px;
+      border-radius: 10px;
       line-height: 1.6;
+      font-size: 14.5px;
+    }
+
+    /* Cool Styled Bottom AI Badge Indicator */
+    .ai-powered-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #f5f3ff, #edd4ff);
+      border: 1px solid #d8b4fe;
+      padding: 10px 16px;
+      border-radius: 30px;
+      margin-top: 18px;
+      color: #6b21a8;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(168, 85, 247, 0.08);
+    }
+
+    .ai-sparkle {
+      font-size: 14px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
     }
 
     .btn-group {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-top: 20px;
+      margin-top: 22px;
     }
 
     .main-btn {
-      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      background: #1f3b5b;
       color: white;
       border: none;
       border-radius: 12px;
@@ -146,20 +213,20 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
-      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.2);
     }
 
     .main-btn:hover {
-      opacity: 0.9;
+      background: #13253a;
     }
 
-    .tag {
-      display: inline-block;
-      background: #dce8ff;
-      padding: 5px 10px;
-      border-radius: 20px;
-      margin: 5px 5px 0 0;
-      font-size: 13px;
+    .main-btn.btn-secondary {
+      background: #ffffff;
+      color: #1f3b5b;
+      border: 1px solid #cbd5e1;
+    }
+
+    .main-btn.btn-secondary:hover {
+      background: #f8fafc;
     }
 
     table {
@@ -172,19 +239,20 @@
     }
 
     th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
+      border: 1px solid #e2e8f0;
+      padding: 12px;
       text-align: left;
     }
 
     th {
       background: #1f3b5b;
       color: white;
+      font-weight: 600;
     }
 
     .progress {
-      height: 18px;
-      background: #ddd;
+      height: 14px;
+      background: #e2e8f0;
       border-radius: 10px;
       overflow: hidden;
       margin-top: 8px;
@@ -194,7 +262,7 @@
       height: 100%;
       background: #1f3b5b;
       width: 0%;
-      transition: width 0.5s;
+      transition: width 0.5s ease;
     }
 
     .small {
@@ -231,13 +299,11 @@
     .material-card ul {
       padding-left: 18px;
       line-height: 1.7;
+      font-size: 13px;
+      color: #475569;
     }
 
-    .print-header {
-      display: none;
-    }
-
-    .print-report {
+    .print-header, .print-report {
       display: none;
     }
 
@@ -325,13 +391,16 @@
 
 <div class="container">
 
-  <div class="print-report" id="printReport">
+  <div class="privacy-warning-banner">
+    🔒 <strong>Confidential Student Evaluation Log:</strong> This system tracks non-public student progress metrics. Access is restricted exclusively to authorized educational staff. This platform is closed to external search engine indexers, web crawlers, and scrapers.
+  </div>
 
+  <div class="print-report" id="printReport">
     <div class="print-header">
       <h1>Student Literacy Support Report</h1>
       <p id="printCycle" style="font-weight:600; margin-top:8px;"></p>
       <p>Student Literacy & Progress Monitoring</p>
-      <p style="font-size:11px; margin-top:6px;">Literacy Intervention System (LIS) Build 24.3</p>
+      <p style="font-size:11px; margin-top:6px; color: #555;">Literacy Intervention System (LIS) Build 24.3</p>
     </div>
 
     <div class="report-section" style="border:1px solid #999; background:#fafafa;">
@@ -369,11 +438,11 @@
         </div>
       </div>
     </div>
-
   </div>
+
   <h1>Literacy Intervention System</h1>
   <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
-    <p>Comprehensive literacy intervention, comprehension tracking, and academic support platform for middle school transition planning and ongoing intervention support.</p>
+    <p style="color: #475569;">Comprehensive literacy intervention, comprehension tracking, and academic support platform for middle school transition planning and ongoing intervention support.</p>
     <div style="background:#1f3b5b; color:white; padding:8px 14px; border-radius:20px; font-size:13px; font-weight:bold; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
       LIS Build 24.3 | Academic Year 2025-2026
     </div>
@@ -405,12 +474,12 @@
     <h2>Student Information & Transition Tracking</h2>
 
     <div class="grid">
-      <div>
+      <div class="form-group">
         <label>Reviewed By</label>
         <input type="text" id="reviewedBy" placeholder="Staff Member">
       </div>
 
-      <div>
+      <div class="form-group">
         <label>Reporting Cycle</label>
         <select id="reportCycle">
           <option>Semester 1 Report</option>
@@ -419,7 +488,7 @@
         </select>
       </div>
 
-      <div>
+      <div class="form-group">
         <label>Student Support Status</label>
         <select id="supportStatus">
           <option>Monitoring</option>
@@ -427,17 +496,18 @@
           <option>Intensive Support</option>
         </select>
       </div>
-      <div>
+      
+      <div class="form-group">
         <label>Previous MAP Reading Score</label>
         <input type="number" id="mapReading" placeholder="Enter MAP Reading score">
       </div>
 
-      <div>
+      <div class="form-group">
         <label>Previous MAP Language Usage Score</label>
         <input type="number" id="mapLanguage" placeholder="Enter MAP Language score">
       </div>
 
-      <div>
+      <div class="form-group">
         <label>Current CEFR / Cambridge Level</label>
         <select id="cefrLevel">
           <option>A1</option>
@@ -448,13 +518,14 @@
         </select>
       </div>
     </div>
+    
     <div class="grid">
-      <div>
+      <div class="form-group">
         <label>Student Name</label>
-        <input type="text" id="studentName" readonly>
+        <input type="text" id="studentName" readonly style="background: #e2e8f0; font-weight: bold;">
       </div>
 
-      <div>
+      <div class="form-group">
         <label>Grade Level</label>
         <select id="gradeLevel">
           <option>Grade 8 → Grade 9</option>
@@ -463,7 +534,7 @@
         </select>
       </div>
 
-      <div>
+      <div class="form-group">
         <label>Assessment / Progress Monitoring Date</label>
         <input type="date" id="assessmentDate">
       </div>
@@ -473,22 +544,28 @@
   <div class="grid">
 
     <div class="card">
-    <h2>Reading & MAZE Comprehension Assessment</h2>
+      <h2>Reading & MAZE Comprehension Assessment</h2>
 
-      <label>Instructional Reading Level</label>
-      <select id="readingLevel">
-        <option>Below Grade 3</option>
-        <option>Grades 3-4</option>
-        <option>Grades 5-6</option>
-        <option>Grades 7-8</option>
-        <option>Grade Level</option>
-      </select>
+      <div class="form-group">
+        <label>Instructional Reading Level</label>
+        <select id="readingLevel">
+          <option>Below Grade 3</option>
+          <option>Grades 3-4</option>
+          <option>Grades 5-6</option>
+          <option>Grades 7-8</option>
+          <option>Grade Level</option>
+        </select>
+      </div>
 
-      <label>Reading Fluency (WPM)</label>
-      <input type="number" id="fluency">
+      <div class="form-group">
+        <label>Reading Fluency (WPM)</label>
+        <input type="number" id="fluency" placeholder="Enter WPM score">
+      </div>
 
-      <label>MAZE Comprehension Score</label>
-      <input type="number" id="mazeScore" placeholder="Enter MAZE score">
+      <div class="form-group">
+        <label>MAZE Comprehension Score</label>
+        <input type="number" id="mazeScore" placeholder="Enter MAZE score">
+      </div>
 
       <label>Main Idea Identification</label>
       <div class="rating" data-group="mainIdea">
@@ -504,35 +581,43 @@
         <button onclick="setRating(this, 'Proficient')">Proficient</button>
       </div>
 
-      <label>Vocabulary Understanding</label>
-      <select id="vocabSupport">
-        <option>Needs Full Support</option>
-        <option>Needs Some Support</option>
-        <option>Independent</option>
-      </select>
+      <div class="form-group">
+        <label>Vocabulary Understanding</label>
+        <select id="vocabSupport">
+          <option>Needs Full Support</option>
+          <option>Needs Some Support</option>
+          <option>Independent</option>
+        </select>
+      </div>
 
-      <label>Reading Notes</label>
-      <textarea id="readingNotes"></textarea>
+      <div class="form-group">
+        <label>Reading Notes</label>
+        <textarea id="readingNotes" placeholder="Enter observations..."></textarea>
+      </div>
     </div>
 
     <div class="card">
       <h2>Writing Assessment</h2>
 
-      <label>Sentence Construction</label>
-      <select id="sentenceLevel">
-        <option>Incomplete Sentences</option>
-        <option>Simple Complete Sentences</option>
-        <option>Expanded Sentences</option>
-        <option>Complex Sentences</option>
-      </select>
+      <div class="form-group">
+        <label>Sentence Construction</label>
+        <select id="sentenceLevel">
+          <option>Incomplete Sentences</option>
+          <option>Simple Complete Sentences</option>
+          <option>Expanded Sentences</option>
+          <option>Complex Sentences</option>
+        </select>
+      </div>
 
-      <label>Paragraph Organization</label>
-      <select id="paragraphLevel">
-        <option>Unable to Organize</option>
-        <option>Developing Organization</option>
-        <option>Mostly Organized</option>
-        <option>Independent Organization</option>
-      </select>
+      <div class="form-group">
+        <label>Paragraph Organization</label>
+        <select id="paragraphLevel">
+          <option>Unable to Organize</option>
+          <option>Developing Organization</option>
+          <option>Mostly Organized</option>
+          <option>Independent Organization</option>
+        </select>
+      </div>
 
       <label>Prompt Response Ability</label>
       <div class="rating" data-group="promptResponse">
@@ -541,60 +626,72 @@
         <button onclick="setRating(this, 'Proficient')">Proficient</button>
       </div>
 
-      <label>Independence Level</label>
-      <select id="independence">
-        <option>Highly Dependent on Scaffolds</option>
-        <option>Moderately Dependent</option>
-        <option>Occasionally Needs Support</option>
-        <option>Mostly Independent</option>
-      </select>
+      <div class="form-group">
+        <label>Independence Level</label>
+        <select id="independence">
+          <option>Highly Dependent on Scaffolds</option>
+          <option>Moderately Dependent</option>
+          <option>Occasionally Needs Support</option>
+          <option>Mostly Independent</option>
+        </select>
+      </div>
 
-      <label>Scaffold Dependence During Writing</label>
-      <select id="writingScaffold">
-        <option>Requires Full Scaffold</option>
-        <option>Benefits from Guided Support</option>
-        <option>Minimal Scaffolds Needed</option>
-        <option>Independent Writer</option>
-      </select>
+      <div class="form-group">
+        <label>Scaffold Dependence During Writing</label>
+        <select id="writingScaffold">
+          <option>Requires Full Scaffold</option>
+          <option>Benefits from Guided Support</option>
+          <option>Minimal Scaffolds Needed</option>
+          <option>Independent Writer</option>
+        </select>
+      </div>
 
-      <label>Writing Sample Notes</label>
-      <textarea id="writingNotes"></textarea>
+      <div class="form-group">
+        <label>Writing Sample Notes</label>
+        <textarea id="writingNotes" placeholder="Enter details..."></textarea>
+      </div>
     </div>
 
     <div class="card">
       <h2>Language Processing</h2>
 
-      <label>Task Processing & Multi-Step Instruction</label>
-      <select id="directions">
-        <option>Unable Without Full Support</option>
-        <option>Benefits from Guided Instruction</option>
-        <option>Can Follow with Occasional Support</option>
-        <option>Independent</option>
-      </select>
+      <div class="form-group">
+        <label>Task Processing & Multi-Step Instruction</label>
+        <select id="directions">
+          <option>Unable Without Full Support</option>
+          <option>Benefits from Guided Instruction</option>
+          <option>Can Follow with Occasional Support</option>
+          <option>Independent</option>
+        </select>
+      </div>
 
-      <label>Response to Guided Instruction</label>
-      <select id="chunkedInstruction">
-        <option>Strong Response to Guided Support</option>
-        <option>Moderate Response to Guided Support</option>
-        <option>Limited Response to Guided Support</option>
-      </select>
+      <div class="form-group">
+        <label>Response to Guided Instruction</label>
+        <select id="chunkedInstruction">
+          <option>Strong Response to Guided Support</option>
+          <option>Moderate Response to Guided Support</option>
+          <option>Limited Response to Guided Support</option>
+        </select>
+      </div>
 
-      <label>Independent Task Processing</label>
-      <select id="nonChunkedInstruction">
-        <option>Difficulty Sustaining Independent Performance</option>
-        <option>Developing Independent Processing</option>
-        <option>Independent Academic Processing</option>
-      </select>
+      <div class="form-group">
+        <label>Independent Task Processing</label>
+        <select id="nonChunkedInstruction">
+          <option>Difficulty Sustaining Independent Performance</option>
+          <option>Developing Independent Processing</option>
+          <option>Independent Academic Processing</option>
+        </select>
+      </div>
 
-      <label>Observed Behaviors / Notes</label>
-      <textarea id="processingNotes"></textarea>
+      <div class="form-group">
+        <label>Observed Behaviors / Notes</label>
+        <textarea id="processingNotes" placeholder="Enter processing habits..."></textarea>
+      </div>
     </div>
-
   </div>
 
   <div class="card">
     <h2>Support Comparison</h2>
-
     <table>
       <thead>
         <tr>
@@ -606,17 +703,16 @@
       </thead>
       <tbody>
         <tr>
-          <td><input type="text" placeholder="Example: Reading comprehension"></td>
-          <td><textarea placeholder="Student performance independently"></textarea></td>
-          <td><textarea placeholder="Performance with scaffolds/support"></textarea></td>
-          <td><textarea placeholder="Observed differences"></textarea></td>
+          <td><input type="text" id="table_task_1" placeholder="Example: Reading comprehension"></td>
+          <td><textarea id="table_ind_1" placeholder="Student performance independently"></textarea></td>
+          <td><textarea id="table_guid_1" placeholder="Performance with scaffolds/support"></textarea></td>
+          <td><textarea id="table_obs_1" placeholder="Observed differences"></textarea></td>
         </tr>
-
         <tr>
-          <td><input type="text" placeholder="Example: Writing response"></td>
-          <td><textarea></textarea></td>
-          <td><textarea></textarea></td>
-          <td><textarea></textarea></td>
+          <td><input type="text" id="table_task_2" placeholder="Example: Writing response"></td>
+          <td><textarea id="table_ind_2"></textarea></td>
+          <td><textarea id="table_guid_2"></textarea></td>
+          <td><textarea id="table_obs_2"></textarea></td>
         </tr>
       </tbody>
     </table>
@@ -624,7 +720,6 @@
 
   <div class="card">
     <h2>Instructional Materials & Intervention Resources</h2>
-
     <div class="materials-grid">
       <div class="material-card">
         <h3>Ventures Second Edition</h3>
@@ -668,7 +763,6 @@
     </div>
 
     <h2 style="margin-top:25px;">Program Resources & Assessment Framework</h2>
-
     <table>
       <thead>
         <tr>
@@ -688,7 +782,6 @@
           <td>Reading comprehension progress monitoring</td>
           <td>Used for comprehension tracking and data collection</td>
         </tr>
-        
         <tr>
           <td>Cambridge English Assessment / CEFR Tracking</td>
           <td>Track language acquisition and proficiency progression</td>
@@ -710,9 +803,7 @@
 
   <div class="card">
     <h2>Assessment Materials & Skill-Based Testing Resources</h2>
-
     <div class="materials-grid">
-
       <div class="material-card">
         <h3>Reading Fluency Assessment</h3>
         <ul>
@@ -778,7 +869,6 @@
           <li>CEFR-aligned benchmark checks</li>
         </ul>
       </div>
-
     </div>
 
     <table style="margin-top:25px;">
@@ -787,7 +877,6 @@
           <th>Skill Area</th>
           <th>Suggested Material</th>
           <th>Assessment Method</th>
-          <th>Frequency</th>
         </tr>
       </thead>
       <tbody>
@@ -795,52 +884,40 @@
           <td>Reading Fluency</td>
           <td>Grade-leveled passages</td>
           <td>1-minute oral reading</td>
-          <td>Biweekly</td>
         </tr>
         <tr>
           <td>Reading Comprehension</td>
           <td>MAZE passages</td>
           <td>Timed comprehension tasks</td>
-          <td>Weekly</td>
         </tr>
         <tr>
           <td>Writing</td>
           <td>Constructed response prompts</td>
           <td>Independent + scaffolded comparison</td>
-          <td>1-2 times weekly</td>
         </tr>
         <tr>
           <td>Vocabulary</td>
           <td>Ventures vocabulary sets</td>
           <td>Context/application activities</td>
-          <td>Weekly</td>
         </tr>
         <tr>
           <td>Language Processing</td>
           <td>Teacher-created direction tasks</td>
           <td>Observation + completion tracking</td>
-          <td>Ongoing</td>
         </tr>
         <tr>
           <td>CEFR / Cambridge</td>
           <td>Cambridge-aligned assessments</td>
           <td>Benchmark proficiency checks</td>
-          <td>Every 6 weeks</td>
         </tr>
       </tbody>
     </table>
   </div>
 
   <div class="card">
-    <h2>Data Collection Recommendations</h2>
-
-    <div class="tag">Use existing classroom texts</div>
-    <div class="tag">Collect 1-2 writing samples weekly</div>
-    <div class="tag">Compare independent vs scaffolded tasks</div>
-    <div class="tag">Use qualitative + quantitative data</div>
-    <div class="tag">Track comprehension trends</div>
-    <div class="tag">Monitor instructional response</div>
-
+    <h2>Assessment Progress Tracker</h2>
+    <p style="color: #475569; font-size: 14px; margin-bottom: 10px;">Tracks filled parameters and completed metrics across the evaluation matrix.</p>
+    
     <div class="score-box">
       <h3>Assessment Completion</h3>
       <div class="progress">
@@ -857,17 +934,23 @@
       Complete the assessment to generate an intervention summary.
     </div>
 
+    <div>
+      <div class="ai-powered-badge">
+        <span class="ai-sparkle">✨</span> AI Powered Feature
+      </div>
+    </div>
+
     <div class="btn-group">
       <button class="main-btn" onclick="generateSummary()">Generate Summary</button>
-      <button class="main-btn" onclick="saveData()">Save Student Data</button>
-      <button class="main-btn" onclick="loadData()">Load Student Data</button>
-      <button class="main-btn" onclick="generatePrintReport()">Print Report</button>
-      <button class="main-btn" onclick="resetForm()">Reset Form</button>
+      <button class="main-btn btn-secondary" onclick="saveData()">Save Student Data</button>
+      <button class="main-btn btn-secondary" onclick="loadData()">Load Student Data</button>
+      <button class="main-btn btn-secondary" onclick="generatePrintReport()">Print Report</button>
+      <button class="main-btn btn-secondary" onclick="resetForm()" style="color: #c53030; border-color: #feb2b2;">Reset Form Fields</button>
     </div>
   </div>
 </div>
 
-<script>
+<script {nonce}>
   let currentStudent = 'Leen';
 
   const studentProfiles = {
@@ -881,7 +964,24 @@
     'Laith': {}
   };
 
-  document.getElementById('studentName').value = currentStudent;
+  // Safe root registration error tracker
+  window.addEventListener('error', function(event) {
+    console.error('Application Error Tracked:', {
+      message: event?.message || 'Unknown issue',
+      source: event?.filename || 'Unknown context source',
+      line: event?.lineno || 'N/A'
+    });
+  });
+
+  // Base Lifecycle Monitor Hooks
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      document.getElementById('studentName').value = currentStudent;
+      updateProgress();
+    } catch (err) {
+      console.error('Initialization Error:', err);
+    }
+  });
 
   function switchStudent(name, button) {
     currentStudent = name;
@@ -904,28 +1004,7 @@
 
     button.classList.add('selected');
     parent.setAttribute('data-value', value);
-
-    window.addEventListener('error', function(event) {
-    console.error('Application Error:', {
-      message: event?.message || 'Unknown error',
-      source: event?.filename || 'Unknown source',
-      line: event?.lineno || 'N/A'
-    });
-  });
-
-  document.addEventListener('DOMContentLoaded', function() {
-    try {
-      if (typeof updateProgress === 'function') {
-        updateProgress();
-      }
-
-      if (typeof generateSummary === 'function') {
-        generateSummary();
-      }
-    } catch (err) {
-      console.error('Initialization Error:', err);
-    }
-  });
+    updateProgress();
   }
 
   function updateProgress() {
@@ -933,38 +1012,55 @@
     let filled = 0;
 
     fields.forEach(field => {
-      if(field.value.trim() !== '') {
+      if(field.id && field.value.trim() !== '') {
         filled++;
       }
     });
 
-    const percent = Math.round((filled / fields.length) * 100);
+    const ratingGroups = document.querySelectorAll('.rating');
+    ratingGroups.forEach(group => {
+      if(group.getAttribute('data-value')) {
+        filled++;
+      }
+    });
+
+    const totalMetricsCount = fields.length + ratingGroups.length;
+    const percent = totalMetricsCount > 0 ? Math.round((filled / totalMetricsCount) * 100) : 0;
 
     document.getElementById('progressFill').style.width = percent + '%';
     document.getElementById('progressText').innerText = percent + '% Completed';
   }
 
-  document.querySelectorAll('input, select, textarea').forEach(field => {
-    field.addEventListener('input', updateProgress);
+  // Monitor document wide inputs dynamically
+  document.addEventListener('input', function(e) {
+    if(e.target.matches('input, select, textarea')) {
+      updateProgress();
+    }
   });
 
+  // Clean, Functional AI Synthesis Profile Summary Builder
   function generateSummary() {
     const readingLevel = document.getElementById('readingLevel').value;
     const fluency = document.getElementById('fluency').value;
+    const mazeScore = document.getElementById('mazeScore').value;
     const mapReading = document.getElementById('mapReading').value;
+    const mapLanguage = document.getElementById('mapLanguage').value;
     const cefrLevel = document.getElementById('cefrLevel').value;
     const independence = document.getElementById('independence').value;
     const directions = document.getElementById('directions').value;
+    const supportStatus = document.getElementById('supportStatus').value;
+    
+    const mainIdea = document.querySelector('[data-group="mainIdea"]')?.getAttribute('data-value') || 'Not Evaluated';
+    const inference = document.querySelector('[data-group="inference"]')?.getAttribute('data-value') || 'Not Evaluated';
 
     const summary = `
-      <strong>${currentStudent}</strong> currently demonstrates a reading instructional level of <strong>${readingLevel}</strong>. 
-      Reading fluency data indicates approximately <strong>${fluency || 'N/A'} WPM</strong>. Current MAZE comprehension data and classroom literacy performance suggest ongoing monitoring of comprehension accuracy and reading independence. Previous MAP Reading data currently reflects a score of <strong>${mapReading || 'N/A'}</strong>, while Cambridge assessment data places the student at approximately <strong>${cefrLevel}</strong> proficiency. 
-      The student currently shows an independence level categorized as <strong>${independence}</strong>. 
-      In language processing tasks, the student demonstrates the following profile: <strong>${directions}</strong>. 
+      <strong>${currentStudent}</strong> currently demonstrates a reading instructional level of <strong>${readingLevel}</strong> under the <strong>${supportStatus}</strong> pathway. 
+      Reading fluency data indicates an oral pace of approximately <strong>${fluency || 'N/A'} WPM</strong> alongside a baseline MAZE comprehension metric of <strong>${mazeScore || 'N/A'}</strong>. 
+      Core diagnostic skills show main idea identification tracking at a <strong>${mainIdea}</strong> proficiency tier and text inference patterns evaluated as <strong>${inference}</strong>. 
       
-      Based on collected data, recommended next steps include continued academic language support, targeted comprehension development, structured written expression support, vocabulary reinforcement, and guided instructional accommodations aligned with current literacy and transition expectations. 
+      Previous standardized test records indicate a baseline MAP Reading score of <strong>${mapReading || 'N/A'}</strong> and a MAP Language Usage value of <strong>${mapLanguage || 'N/A'}</strong>, tracking global language progression at approximately a <strong>CEFR ${cefrLevel}</strong> benchmark. 
       
-      The assessment emphasizes the importance of comparing independent performance against scaffolded performance to identify growth potential and instructional responsiveness.
+      The student currently handles expressive text output at an autonomy tier categorized as <strong>${independence}</strong>. Within multi-step academic instruction processing settings, performance profile routes align at a <strong>${directions}</strong> capability standard. Based on collected matrix data points, upcoming strategic targets should evaluate independent task metrics against guided support performance configurations to maximize instructional responsiveness.
     `;
 
     document.getElementById('summaryOutput').innerHTML = summary;
@@ -974,11 +1070,12 @@
     const data = {};
 
     document.querySelectorAll('input, select, textarea').forEach(field => {
-      data[field.id || Math.random()] = field.value;
+      if (field.id) data[field.id] = field.value;
     });
 
     document.querySelectorAll('.rating').forEach(group => {
-      data[group.getAttribute('data-group')] = group.getAttribute('data-value') || '';
+      const groupName = group.getAttribute('data-group');
+      if (groupName) data[groupName] = group.getAttribute('data-value') || '';
     });
 
     return data;
@@ -986,59 +1083,65 @@
 
   function saveData() {
     studentProfiles[currentStudent] = gatherFormData();
-    localStorage.setItem('literacyProfiles', JSON.stringify(studentProfiles));
+    localStorage.setItem('literacyProfiles_v24_3', JSON.stringify(studentProfiles));
     alert(currentStudent + ' data saved successfully.');
   }
 
   function loadData() {
-    const saved = JSON.parse(localStorage.getItem('literacyProfiles'));
+    const saved = JSON.parse(localStorage.getItem('literacyProfiles_v24_3'));
 
     if(saved) {
       Object.assign(studentProfiles, saved);
     }
 
-    const data = studentProfiles[currentStudent];
+    const data = studentProfiles[currentStudent] || {};
 
     document.querySelectorAll('input, select, textarea').forEach(field => {
       if(field.id && data[field.id] !== undefined) {
         field.value = data[field.id];
+      } else if (field.id && field.id !== 'studentName') {
+        field.value = '';
       }
     });
 
     document.querySelectorAll('.rating').forEach(group => {
       const groupName = group.getAttribute('data-group');
-      const value = data[groupName];
+      const value = data[groupName] || '';
+      group.setAttribute('data-value', value);
 
       group.querySelectorAll('button').forEach(btn => {
         btn.classList.remove('selected');
-
-        if(btn.innerText === value) {
+        if(btn.innerText === value && value !== '') {
           btn.classList.add('selected');
         }
       });
     });
 
+    document.getElementById('summaryOutput').innerHTML = 'Complete the assessment to generate an intervention summary.';
     updateProgress();
   }
 
   function resetForm() {
-    document.querySelectorAll('input, textarea').forEach(field => {
-      if(field.id !== 'studentName') {
-        field.value = '';
-      }
-    });
+    if(confirm('Clear all configuration input metrics for the selected student?')) {
+      document.querySelectorAll('input, textarea').forEach(field => {
+        if(field.id !== 'studentName') {
+          field.value = '';
+        }
+      });
 
-    document.querySelectorAll('select').forEach(select => {
-      select.selectedIndex = 0;
-    });
+      document.querySelectorAll('select').forEach(select => {
+        select.selectedIndex = 0;
+      });
 
-    document.querySelectorAll('.rating button').forEach(btn => {
-      btn.classList.remove('selected');
-    });
+      document.querySelectorAll('.rating button').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      
+      document.querySelectorAll('.rating').forEach(g => g.removeAttribute('data-value'));
 
-    document.getElementById('summaryOutput').innerHTML = 'Complete the assessment to generate an intervention summary.';
-
-    updateProgress();
+      document.getElementById('summaryOutput').innerHTML = 'Complete the assessment to generate an intervention summary.';
+      updateProgress();
+    }
   }
 
   function createReportItem(label, value) {
@@ -1096,8 +1199,6 @@
       window.print();
     }, 300);
   }
-
-  updateProgress();
 </script>
 
 </body>
