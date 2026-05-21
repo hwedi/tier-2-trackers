@@ -1235,3 +1235,124 @@
         }
       }
     });
+
+    document.querySelectorAll('.rating').forEach(group => {
+      const groupName = group.getAttribute('data-group');
+      const value = data[groupName] || '';
+      group.setAttribute('data-value', value);
+
+      group.querySelectorAll('button').forEach(btn => {
+        btn.classList.remove('selected');
+        if(btn.innerText === value && value !== '') {
+          btn.classList.add('selected');
+        }
+      });
+    });
+
+    document.getElementById('studentName').value = currentStudent;
+    document.getElementById('summaryOutput').innerHTML = 'Complete the assessment to generate an intervention summary.';
+    updateProgress();
+  }
+
+  function resetForm() {
+    if(confirm('Clear all configuration input metrics for the selected student?')) {
+      document.querySelectorAll('input, textarea').forEach(field => {
+        if(field.id !== 'studentName' && field.id !== 'reviewedBy' && field.id !== 'table_task_1' && field.id !== 'table_task_2') {
+          field.value = '';
+          if(field.tagName === 'TEXTAREA') field.textContent = '';
+        }
+      });
+
+      document.querySelectorAll('select').forEach(select => {
+        if(select.id !== 'reportCycle') select.selectedIndex = 0;
+      });
+
+      document.querySelectorAll('.rating button').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      
+      document.querySelectorAll('.rating').forEach(g => g.removeAttribute('data-value'));
+
+      document.getElementById('summaryOutput').innerHTML = 'Complete the assessment to generate an intervention summary.';
+      updateProgress();
+    }
+  }
+
+  function createReportItem(label, value) {
+    return `
+      <div class="report-item">
+        <div class="report-label">${label}</div>
+        <div>${value || 'N/A'}</div>
+      </div>
+    `;
+  }
+
+  // INTEGRATED PRINT LOGIC FOR THE NEW MATRIX TABLE TEXT AREAS
+  function generatePrintReport() {
+    // Force latest save to current memory profile
+    studentProfiles[currentStudent] = gatherFormData();
+    generateSummary();
+
+    document.getElementById('printCycle').innerText = document.getElementById('reportCycle').value;
+
+    document.getElementById('reportStudentInfo').innerHTML = `
+      ${createReportItem('Student Name', currentStudent)}
+      ${createReportItem('Grade Transition', document.getElementById('gradeLevel').value)}
+      ${createReportItem('Reporting Cycle', document.getElementById('reportCycle').value)}
+      ${createReportItem('Assessment Date', document.getElementById('assessmentDate').value)}
+      ${createReportItem('MAP Reading', document.getElementById('mapReading').value)}
+      ${createReportItem('MAP Language Usage', document.getElementById('mapLanguage').value)}
+      ${createReportItem('CEFR Level', document.getElementById('cefrLevel').value)}
+      ${createReportItem('Instructional Reading Level', document.getElementById('readingLevel').value)}
+      ${createReportItem('Reading Fluency', document.getElementById('fluency').value + ' WPM')}
+      ${createReportItem('MAZE Comprehension', document.getElementById('mazeScore').value)}
+    `;
+
+    document.getElementById('reportReading').innerHTML = `
+      ${createReportItem('Vocabulary Support', document.getElementById('vocabSupport').value)}
+      ${createReportItem('Main Idea Skills', (document.querySelector('[data-group="mainIdea"]')?.getAttribute('data-value')) || 'N/A')}
+      ${createReportItem('Inference Skills', (document.querySelector('[data-group="inference"]')?.getAttribute('data-value')) || 'N/A')}
+      ${createReportItem('Reading Notes', document.getElementById('readingNotes').value)}
+    `;
+
+    document.getElementById('reportWriting').innerHTML = `
+      ${createReportItem('Sentence Construction', document.getElementById('sentenceLevel').value)}
+      ${createReportItem('Paragraph Organization', document.getElementById('paragraphLevel').value)}
+      ${createReportItem('Independence Level', document.getElementById('independence').value)}
+      ${createReportItem('Writing Scaffold Support', document.getElementById('writingScaffold').value)}
+      ${createReportItem('Writing Notes', document.getElementById('writingNotes').value)}
+    `;
+
+    document.getElementById('reportLanguage').innerHTML = `
+      ${createReportItem('Following Directions', document.getElementById('directions').value)}
+      ${createReportItem('Chunked Instruction Response', document.getElementById('chunkedInstruction').value)}
+      ${createReportItem('Non-Chunked Response', document.getElementById('nonChunkedInstruction').value)}
+      ${createReportItem('Processing Notes', document.getElementById('processingNotes').value)}
+    `;
+
+    // CRITICAL FIX: Generates full structural view for table elements inside print frame
+    document.getElementById('reportSupportMatrix').innerHTML = `
+      <div style="border: 1px solid #bbb; padding: 10px; border-radius: 6px;">
+        <span style="font-weight: bold; color: #1f3b5b; text-decoration: underline;">Task Area: ${document.getElementById('table_task_1').value || 'Reading Comprehension'}</span>
+        <div style="margin-top: 5px;"><strong>Independent Performance:</strong> ${document.getElementById('table_ind_1').value || 'N/A'}</div>
+        <div style="margin-top: 3px;"><strong>Guided Support Performance:</strong> ${document.getElementById('table_guid_1').value || 'N/A'}</div>
+        <div style="margin-top: 3px;"><strong>Observed Accessibility Changes:</strong> ${document.getElementById('table_obs_1').value || 'N/A'}</div>
+      </div>
+      <div style="border: 1px solid #bbb; padding: 10px; border-radius: 6px;">
+        <span style="font-weight: bold; color: #1f3b5b; text-decoration: underline;">Task Area: ${document.getElementById('table_task_2').value || 'Writing Response'}</span>
+        <div style="margin-top: 5px;"><strong>Independent Performance:</strong> ${document.getElementById('table_ind_2').value || 'N/A'}</div>
+        <div style="margin-top: 3px;"><strong>Guided Support Performance:</strong> ${document.getElementById('table_guid_2').value || 'N/A'}</div>
+        <div style="margin-top: 3px;"><strong>Observed Accessibility Changes:</strong> ${document.getElementById('table_obs_2').value || 'N/A'}</div>
+      </div>
+    `;
+
+    document.getElementById('reportSummary').innerHTML = document.getElementById('summaryOutput').innerHTML;
+
+    setTimeout(() => {
+      window.print();
+    }, 300);
+  }
+</script>
+
+</body>
+</html>
